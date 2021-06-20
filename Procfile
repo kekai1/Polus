@@ -1,1 +1,1 @@
-web: gunicorn app:polus
+web: gunicorn polus:app
