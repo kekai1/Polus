@@ -16,15 +16,16 @@ MAX_CONTENT_LENGTH = 1024 * 1024
 #Конфигурационные настройки проекта, и связь с БД-----------------------------------------------
 app = Flask(__name__)
 mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'asdqweasdqwe1'
+app.config['MYSQL_DATABASE_USER'] = 'bafce1efb1c421'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
 app.config['MYSQL_DATABASE_DB'] = 'bucketlist'
-app.config['CLEARDB_DATABASE_URL'] = 'mysql://bafce1efb1c421:b9e81c99@eu-cdbr-west-01.cleardb.com/heroku_6237bfc1dff5be7?reconnect=true'
+app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
 mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
 
 app.register_blueprint(admin, url_prefix='/admin')
+
 
 #Проверка входа пользователя в сессии перед url запросом-----------------------------------------------
 login_manager = LoginManager(app)
