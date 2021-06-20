@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <span style='font-size:12.0pt;margin-left: 65%'>
+    <script type="text/javascript">
+    // Заголовок страницы (h1)
+    var title = "";
+    // Подзаголовок (h2)
+    var subtitle = "Необходимо обеспечить защиту связи между космическим кораблем и землей. Для этого разберемся с офисом в котором персонал поддерживает связь с бортом корабля.";
+    // Это ваши вопросы
+   var questions=[
+{
+	text: "Выберем лица имеющие доступ к этому офису:",
+	answers: ["Все работники компании", "Курьер", "HR-специалист", "Вахтерша", "Лица ответственные за полет"],
+	correctAnswer: 4,
+},
+{
+    text: "Определим вид контроля допуска в офис:",
+	answers: ["Бейджик", "Свободный проход в офис", "Охранник", "Система пропуска по биометрии(отпечаток пальца)", "Проход по ФИО"],
+	correctAnswer: 3
+},
+{
+    text: "Защита программного обеспечения и техники:",
+	answers: ["Одинаковые пароли на каждом ПО", "Все сотрудники в офисе имеют доступ к оборудованию ", "Хаотичное распределение техники по офису ", "Ограниченный доступ в интернет и надежные пароли "],
+	correctAnswer2: 4
+},
+{
+    text: "Защита сетевого трафика:",
+	answers: ["Использование местных wi-fi сетей", "Открытое подключение к сети по спутнику", "Программы для защиты сетевого трафика", "передача данных через общий канал связи", "протокол SMTP"],
+	correctAnswer: 2,
+},
+];
+
+    var yourAns = new Array;
+    var score = 0;
+
+    function Engine(question, answer) {yourAns[question]=answer;}
+
+    function Score(){
+       var answerText = "Результаты:\n";
+       for(var i = 0; i < yourAns.length; ++i){
+        var num = i+1;
+        if(yourAns[i]==questions[i].correctAnswer)
+        {
+            score+=10;
+        }
+           }
+
+
+
+
+        if(score<30 && score>=10)
+        {
+           answerText="Достижение: Задаки в области безопасности";
+           document.getElementById('score').value = answerText;
+        }
+        else if(score==0)
+        {
+           answerText="К сожалению вы не смогли обезопасить компанию";
+        }
+        else if(score>=30)
+        {
+           answerText="Достижение: Грамота знаний по комплексной безопасности";
+           document.getElementById('score').value = answerText;
+         }
+
+
+
+
+       alert(answerText);
+       yourAns = [];
+       score = 0;
+       clearForm("quiz");
+    }
+    function clearForm(name) {
+       var f = document.forms[name];
+       for(var i = 0; i < f.elements.length; ++i) {
+        if(f.elements[i].checked)
+            f.elements[i].checked = false;
+    }
+    }
+    </script>
+
+    <style>
+    span.quest {font-weight: bold;}
+    </style>
+
+    <h1><script>document.write(title)</script></h1>
+    <h2><script>document.write(subtitle)</script></h2>
+
+
+
+
+    <form name="quiz" action="{{url_for('bezopasnik')}}" method="post">
+        <ol>
+        <script>
+        for(var q=0; q<questions.length; ++q) {
+           var question = questions[q];
+           var idx = 1 + q;
+
+           document.writeln('<li><span class="quest">' + question.text + '</span><br/>');
+           for(var i in question.answers) {
+            document.writeln('<input type=radio name="q' + idx + '" value="' + i +
+            '" onClick="Engine(' + q + ', this.value)">' + question.answers[i] + '<br/>');
+        }
+        }
+        </script>
+        </ol>
+         <p><input type="hidden" name="user_id" value="{{ current_user.get_id() }}" required />
+         <p><input type="hidden" name="name_test" value="Офис cвязи с ракетой" required />
+         <input type="hidden" data-index="1" name="result" id="score" />
+        <input type="Submit" onClick="Score()" value="Проверить результаты" />
+    </form>
+
+{% endblock %}

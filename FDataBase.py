@@ -1,0 +1,198 @@
+import math
+import sqlite3
+import time
+import re
+from flask import url_for, make_response
+
+class FDataBase:
+    def __init__(self, db):
+        self.__db =db
+        self.__cur = db.cursor()
+
+    def getMenu(self):
+        sql = '''SELECT * FROM users'''
+        try:
+            self.__cur.execute(sql)
+            res = self.__cur.fetchall()
+            if res: return res
+        except:
+            print("Ошибка чтения из БД")
+        return []
+
+
+    def addPost(self, title, text, url):
+        try:
+            self.__cur.execute(f"SELECT COUNT() as `count` FROM posts WHERE url LIKE '{url}'")
+            res = self.__cur.fetchone()
+            if res['count'] > 0:
+                print("Статья с таким url уже существует")
+                return False
+
+            base = url_for('static', filename='images_html')
+
+            text = re.sub(r"(?P<tag><img\s+[^>]*src=)(?P<quote>[\"'])(?P<url>.+?)(?P=quote)>",
+                          "\\g<tag>" + base + "/\\g<url>>",
+                          text)
+
+            tm = math.floor(time.time())
+            self.__cur.execute("INSERT INTO tests VALUES(NULL, ?, ?, ?, ?)", (title, text, url, tm))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка добавления статьи в БД " + str(e))
+            return False
+        return True
+
+
+
+    def getPost(self, alias):
+        try:
+            self.__cur.execute(f"SELECT title_test, text_test FROM tests WHERE url LIKE ? LIMIT 1", (alias))
+            res = self.__cur.fetchone()
+            if res:
+                return res
+        except sqlite3.Error as e:
+            print("Error insert artice in Database " + str(e))
+        return (False, False)
+
+
+    def getPostsAnonce(self):
+        try:
+            self.__cur.execute(f"SELECT id_test, title_test, text_test, url FROM tests")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+
+    def addUser(self, name, email, hpsw):
+        try:
+            self.__cur.execute(f"SELECT COUNT(*) AS 'count' FROM users WHERE email_user like '{email}'")
+            res = self.__cur.fetchone()
+            print(res)
+            if res[0] != 0:
+                print('Пользователь с таким email уже существует')
+                return False
+            self.__cur.execute("INSERT INTO users(name_user, email_user, psw_user) VALUES (%s, %s, %s)", (name, email, hpsw))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка в БД, или Пользователь с таким email уже существует " + str(e))
+        return True
+
+
+    #Так как браузер смотрит с каким пользователем работаем по id то проверяем пользователя по id
+    def getUser(self, id_user):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE id_user = {id_user} LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print('Такой пользователь не найден')
+                return False
+            return res
+
+        except sqlite3.Error as e:
+            print("Ошибка в БД " + str(e))
+        return False
+
+
+
+    def getUserByEmail(self, email):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE email_user = '{email}' LIMIT 1")
+            res = self.__cur.fetchone()
+            if not res:
+                print('Пользователь не найден')
+                return False
+            return res
+        except sqlite3.Error as e:
+            print("Ошибка в БД " + str(e))
+
+        return False
+
+
+
+    def updateUserAvatar(self, avatar, id_user, name):
+        if not avatar:
+            try:
+                self.__cur.execute("UPDATE users SET name_user = %s WHERE id_user = %s", (name, id_user))
+                self.__db.commit()
+            except sqlite3.Error as e:
+                print('Ошибка обновления профиля: ', + str(e))
+                return False
+        else:
+            try:
+                self.__cur.execute("UPDATE users SET avatar_user = %s, name_user = %s WHERE id_user = %s", (avatar, name, id_user))
+                self.__db.commit()
+            except sqlite3.Error as e:
+                print('Ошибка обновления автара в БД: ', + str(e))
+                return False
+        return True
+
+
+    def Addresults_test(self, name_test, id_user, result):
+        try:
+            if result == '': return False
+            self.__cur.execute(f"INSERT INTO result_test(name_test, id_user, result) VALUES(%s, %s, %s)", (name_test, id_user, result))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка в БД " + str(e))
+        return True
+
+
+
+    def getresults_test(self, id_user):
+        try:
+            self.__cur.execute(f"SELECT * FROM bucketlist.result_test WHERE result_test.id_user = {id_user}")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+
+
+    def getresults_test_forRaiting(self):
+        try:
+            self.__cur.execute(f"SELECT users.name_user AS 'name', users.id_user, COUNT(result_test.id_user)*5 AS 'raiting' FROM result_test, users WHERE result_test.id_user=users.id_user GROUP BY name ORDER BY raiting DESC")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+
+
+    def check_resultTest(self, id_user, name_test):
+        try:
+            self.__cur.execute(f"SELECT * FROM result_test WHERE id_user = '{id_user}' AND name_test = '{name_test}'")
+            res = self.__cur.fetchone()
+            if res == None:
+                return True
+            if len(res) > 0:
+                print('Вы уже проходили этот тест')
+                return False
+            return True
+        except sqlite3.Error as e:
+            print("Ошибка в БД " + str(e))
+        return True
+
+
+    def add_message(self, id_sender, id_receptient, body):
+        try:
+            if body == '':
+                return False
+            self.__cur.execute(f"INSERT INTO messages(id_sender, id_receptient, body) VALUES(%s, %s, %s)", (id_sender, id_receptient, body))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print("Ошибка в БД " + str(e))
+        return True
+
+
+    def get_messages(self, id_sender, id_receptient):
+        try:
+            self.__cur.execute(f"SELECT * FROM messages WHERE id_sender = {id_sender} AND id_receptient = {id_receptient}")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []

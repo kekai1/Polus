@@ -1,0 +1,20 @@
+ {% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+
+  <p></p>
+<h2>Достижения и результаты тестирования:</h2>
+  <ol class = list-posts >
+        {% for p in result_test %}
+        <li>
+            <p class="btn-success">{{ p[1] }}</p>
+            <p class="btn-white">{{ p[3] }}</p>
+        </li>
+        {% endfor %}
+    </ol>
+ <p></p>
+{% endblock %}

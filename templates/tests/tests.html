@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="col border ру-2 ">
+    <p></p>
+    <ul class = roundcorner>
+        {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {% endfor %}
+        <p></p>
+        {% for p in tests%}
+        <li>
+            <p class="title"><a href="{{ p[3] }}">{{ p[1] }}</a></p>
+            <p class="annonce">{{ p[2] | striptags }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <p></p>
+
+</section>
+{% endblock %}
