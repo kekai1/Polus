@@ -1,4 +1,6 @@
 aes==1.0.0
+antiorm==1.2.1
+app==0.0.1
 appdirs==1.4.4
 atomicwrites==1.4.0
 attrs==20.3.0
@@ -13,6 +15,7 @@ click==7.1.2
 colorama==0.4.4
 cryptography==3.2.1
 cycler==0.10.0
+db==0.1.1
 decorator==4.4.2
 distlib==0.3.1
 django-bootstrap4==1.0.1
@@ -41,7 +44,9 @@ packaging==20.8
 pluggy==0.13.1
 py==1.10.0
 pycparser==2.20
+PyJWT==2.1.0
 PyMySQL==1.0.2
+pyOpenSSL==20.0.1
 pyowm==2.10.0
 pyparsing==2.4.6
 pytest==6.2.1
