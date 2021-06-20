@@ -18,7 +18,7 @@ app = Flask(__name__)
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'bafce1efb1c421'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
-app.config['MYSQL_DATABASE_DB'] = 'bucketlist'
+app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
 mysql.init_app(app)
