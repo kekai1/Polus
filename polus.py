@@ -19,7 +19,7 @@ mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'asdqweasdqwe1'
 app.config['MYSQL_DATABASE_DB'] = 'bucketlist'
-app.config['MYSQL_DATABASE_URI'] = 'Bucketlist.mwb'
+app.config['CLEARDB_DATABASE_URL'] = 'mysql://bafce1efb1c421:b9e81c99@eu-cdbr-west-01.cleardb.com/heroku_6237bfc1dff5be7?reconnect=true'
 app.config['SECRET_KEY'] = SECRET_KEY
 mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
