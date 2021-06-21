@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, make_response, send_file
+from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session
 import os
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,7 +7,6 @@ from UserLogin import UserLogin
 from forms import LoginForm, RegisterForm, MessageForm
 from flaskext.mysql import MySQL
 from admin.admin import admin
-
 
 
 SECRET_KEY = os.urandom(32)
@@ -21,6 +20,10 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
 app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] ='Lax'
+app.config['PERMANENT_SESSION_LIFETIME']=600
 mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
 
@@ -53,9 +56,23 @@ def before_request():
     db = mysql.connect()
     dbase = FDataBase(db)
 
+####Работа с куки------------------------------------------------------------
+@app.route('/delete-cookie/')
+def delete_cookie():
+    res = make_response("Cookie Removed")
+    res.set_cookie('username', 'flask', secure=True, httponly=True, samesite='Lax')
+    return res
 
 
-
+@app.route('/cookie/')
+def cookie():
+    if not request.cookies.get('username'):
+        res = make_response("Setting a cookie")
+        res.set_cookie('username', 'flask', secure=True, httponly=True, samesite='Lax')
+    else:
+        res = make_response("Value of cookie foo is {}".format(request.cookies.get('foo')))
+    return res
+####КОНЕЦ работы с куки------------------------------------------------------------
 
 #Страницы тестов-----------------------------------------------------
 @app.route('/tests')
@@ -182,6 +199,7 @@ def login():
             userlogin = UserLogin().create(user)
             rm = form.remember.data
             login_user(userlogin, remember=rm)
+            session.permanent = True
             return redirect(request.args.get("next") or url_for('profile'))
         flash('Неверные логин или пароль', 'error')
     return render_template("user/login.html", form = form,  title=1)
