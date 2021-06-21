@@ -20,7 +20,6 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
 app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SESSION_COOKIE_SECURE'] = True
 app.config['PERMANENT_SESSION_LIFETIME']=600
 mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
