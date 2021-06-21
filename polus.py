@@ -21,6 +21,9 @@ app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SESSION_COOKIE_SECURE'] = True
+
+app.config['SESSION_COOKIE_NAME'] = 'kazah'
+
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] ='Lax'
 app.config['PERMANENT_SESSION_LIFETIME']=600
@@ -66,7 +69,7 @@ def favicon():
 @app.route('/delete-cookie/')
 def delete_cookie():
     res = make_response("Cookie Removed")
-    res.set_cookie('username', 'flask', secure=True, httponly=True, samesite='Lax')
+    res.set_cookie('kazah', 'flask', secure=True, httponly=True, samesite='Lax')
     return res
 
 
@@ -74,9 +77,9 @@ def delete_cookie():
 def cookie():
     if not request.cookies.get('username'):
         res = make_response("Setting a cookie")
-        res.set_cookie('username', 'flask', secure=True, httponly=True, samesite='Lax')
+        res.set_cookie('kazah', 'flask', secure=True, httponly=True, samesite='Lax')
     else:
-        res = make_response("Value of cookie foo is {}".format(request.cookies.get('foo')))
+        res = make_response("Value of cookie foo is {}".format(request.cookies.get('kazah')))
     return res
 ####КОНЕЦ работы с куки------------------------------------------------------------
 
