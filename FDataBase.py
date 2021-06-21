@@ -142,7 +142,7 @@ class FDataBase:
 
     def getresults_test(self, id_user):
         try:
-            self.__cur.execute(f"SELECT * FROM bucketlist.result_test WHERE result_test.id_user = {id_user}")
+            self.__cur.execute(f"SELECT * FROM result_test WHERE result_test.id_user = {id_user}")
             res = self.__cur.fetchall()
             if res: return res
         except sqlite3.Error as e:
