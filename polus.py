@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session
+from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory
 import os
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -55,6 +55,12 @@ def before_request():
     global dbase
     db = mysql.connect()
     dbase = FDataBase(db)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 ####Работа с куки------------------------------------------------------------
 @app.route('/delete-cookie/')
@@ -450,4 +456,4 @@ def internal_error(error):
 
 
 if __name__=='__main__':
-    app.run(debug=True, ssl_context='adhoc')
+    app.run()
