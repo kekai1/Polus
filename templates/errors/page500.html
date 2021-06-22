@@ -1,7 +1,89 @@
-{% extends 'base.html' %}
+<html>
 
-{% block content %}
-    <h1>Произошла непредвиденная ошибка</h1>
-    <p>Администратор уведомлен. Приносим извинения за неудобства!</p>
-    <p>Вы можете вернуться на <a href="{{url_for('index')}}">Главную</a>
-{% endblock %}
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+  <style>
+ BODY {
+      background: url(static/images_html/index_image/background.jpg) no-repeat;
+      /* Фоновое изображение всегда отцентрировано по вертикали и горизонтали */
+      background-position: center center;
+      /* Фоновое изображение не повторяется */
+      background-repeat: no-repeat;
+      /* Фоновое изображение зафиксировано в окне просмотра, поэтому оно не смещается, когда высота контента больше высоты изображения */
+      background-attachment: fixed;
+      /* Вот что позволяет фоновому изображению подстраиваться под размер контейнера */
+      background-size: cover;
+      /* Устанавливает фоновый цвет, который будет отображаться, пока загружается фоновое изображение */
+      background-color: #464646;
+   }
+
+* {
+  font-family: sans-serif;
+  color: rgba(0,0,0,0.75);
+}
+
+
+.wrapper {
+  max-width: 650px;
+  width: 100%;
+  margin: 30px auto;
+  transform: scale(0.8);
+}
+.landing-page {
+  max-width: 960px;
+  height: 475px;
+  margin: 0;
+  box-shadow: 0px 0px 8px 1px #ccc;
+  background: #fafafa;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+svg {
+  width: 50%;
+  max-height: 225px;
+  height: auto;
+  margin: 0 0 15px;
+}
+h1 {
+  font-size: 48px;
+  margin: 0;
+}
+p {
+
+  width: 35%;
+  font-size: 20px;
+  margin: 16px auto 24px;
+  text-align: center;
+}
+
+
+.btn1{
+    float: right;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    transition: all 0.5s ease 0s;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="wrapper">
+  <div class="landing-page">
+    <h1> 500 Ошибка.</h1>
+    <p>Случилась непредвиденная ошибка<br>Приносим извинения за неудобства!</p>
+    <p class="btn1 btn-default">Вернуться на <a style="color: #000000; font-weight:bold" href="{{url_for('index')}}">Главную</a></p>
+  </div>
+</div>
+
+  </body>
+</html>
+
