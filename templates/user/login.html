@@ -89,6 +89,7 @@
             position: relative;
             margin: 5px 0 0 5px;
             border: 1px solid #11a3fc;
+
             }
             .form-horizontal .main-checkbox label{
             width: 20px;
@@ -110,6 +111,8 @@
             border-right: none;
             background: transparent;
             opacity: 0;
+             -webkit-transform: rotate(-45deg);
+             transform: rotate(-45deg);
             }
             .form-horizontal .main-checkbox input[type=checkbox]{
             visibility: hidden;
@@ -132,6 +135,8 @@
             border-radius: 30px;
             padding: 10px 25px;
             border: none;
+            text-transform: capitalize;
+             transition: all 0.5s ease 0s;
 
             transition: all 0.5s ease 0s;
             }
@@ -196,7 +201,6 @@
                                 <p>{{ form.psw(class_='form-control') }}
                             {% endif %}
                             <i class="fa fa-lock"></i>
-                            <a href="#"  title="Пароль должен быть от 4-100 символов" class="fa fa-question-circle"></a>
                         </div>
 
                         <div class="form-group">

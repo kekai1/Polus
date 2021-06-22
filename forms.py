@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 class LoginForm(FlaskForm):
     email = StringField("Email: ", validators=[Email("Некорректный email")], render_kw={"placeholder": "Email"})
-    psw = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=4, max=100, message="Пароль должен быть от 4 до 100 символов")], render_kw={"placeholder": "Пароль"})
+    psw = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=5, max=100, message="Пароль должен быть от 5 до 100 символов")], render_kw={"placeholder": "Пароль"})
 
 
     remember = BooleanField("Запомнить", default=False)
@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     name = StringField("Имя: ", validators=[Length(min=4, max=100, message="Имя должно быть от 4 до 100 символов")], render_kw={"placeholder": "ФИО"})
     email = StringField("Email: ", validators=[Email("Некорректный email")], render_kw={"placeholder": "Email"})
-    psw = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=4, max=100, message="Пароль должен быть от 4 до 100 символов")],
+    psw = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=5, max=100, message="Пароль должен быть от 5 до 100 символов")],
                         render_kw={"placeholder": "Пароль", "id": "password-input", "type": "password"})
 
     psw2 = PasswordField("Повтор пароля: ", validators=[DataRequired(), EqualTo('psw', message="Пароли не совпадают")], render_kw={"placeholder": "Пароль еще раз"})
