@@ -1,87 +1,34 @@
-<!doctype html>
-<html lang=ru>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% extends 'base.html' %}
+{% block content %}
+<div class="wrapper">
+	<main class="main">
+		<div class="quiz__head">
+				<form name="quiz" action="{{url_for('example')}}" method="post">
+					 <p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
+					 <p><input type="hidden" name="name_test" value="Тест на профориентацию" required />
+					<div class="head__content" id="head"></div>
+					<input type="hidden" id="submit" class="btn btn-success" type="Submit" onClick="End()" value="Завершить тестирование" />
+
+				</form>
 
 
-    <!--  Нижние 3 строки для корректной работы bootstrap navbar dropdown -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		</div>
+		<div class="quiz__body">
+			<div class="buttons">
+				<div class="buttons__content" id="buttons">
+					<button class="button">Default button</button><br>
+					<button class="button button_wrong">Wrong answer</button><br>
+					<button class="button button_correct">Correct answer</button><br>
+					<button class="button button_passive">Unclicked button</button><br>
+				</div>
+			</div>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Pole {% block title %}{% endblock %}</title>
+			<div class="quiz__footer">
+				<div class="footer__content" id="pages">0 / 0</div>
+			</div>
+		</div>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" type="text/css">
-    <style type="text/css">
-   BODY {
-      background: url(/static/images_html/index_image/background.jpg) no-repeat;
-
-      /* Фоновое изображение всегда отцентрировано по вертикали и горизонтали */
-      background-position: center center;
-
-      /* Фоновое изображение не повторяется */
-      background-repeat: no-repeat;
-
-      /* Фоновое изображение зафиксировано в окне просмотра, поэтому оно не смещается, когда высота контента больше высоты изображения */
-      background-attachment: fixed;
-
-      /* Вот что позволяет фоновому изображению подстраиваться под размер контейнера */
-      background-size: cover;
-
-      /* Устанавливает фоновый цвет, который будет отображаться, пока загружается фоновое изображение */
-      background-color: #464646;
-   }
-  </style>
-</head>
-<body >
-<div class="navbar navbar-light border-0">
-   {% if title==1 %}
-        <div class="">
-              <a style="color: white;" href="/">Главная <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
-                <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                </svg></a>
-        </div>
-        <ul class="nav nav-pills ">
-             {% if authenticated %}
-            <div class="sign-wrap-4 " >
-                <a class="btn btn-outline-light" href="/tests">Пройти тестирование</a>
-                 <a class="btn btn-outline-light"  class="" href="/mars">Полет на Марс!</a>
-            </div>
-            {% else %}
-
-                <li class="nav-item" >
-                    <a class="btn btn-outline-light" href="/register">Регистрация</a>
-                     <a class="btn btn-outline-light" href="/login">Авторизация</a>
-                </li>
-
-            {% endif %}
-    {% endif %}
+	</main>
 </div>
-<div class="row container-fluid border-0" style="background-color: #e3f2fd;">
-    <nav class="col-md-auto nav-item flex-column active border-0" >
-    {% if authenticated %}
-            <div>
-                <img src="{{ url_for('userava') }}" width="50" height="50"></a>
-                <a class="dropdown-item" href="/profile">Мой профиль</a>
-                <a class="dropdown-item" href="/raiting" >Рейтинговая таблица</a>
-                <a class="dropdown-item " href="/messages">Сообщения</a>
-                <a class="dropdown-item" href="/update_profile">Изменить профиль</a>
-                <a class="dropdown-item" href="/logout">Выход</a>
-            </div>
-    </nav>
-    {% endif %}
-
-     <section class="col border ру" style="background: linear-gradient(to bottom, #9999ff 0%, #ccffff 100%);">
-         {% block content %}{% endblock %}
-     </section>
-     <section>
-         {% block index %}{% endblock %}
-     </section>
-</div>
-</body>
-</html>
+<script src="static/js/test_liderPotenzial.js"></script>
+{% endblock %}

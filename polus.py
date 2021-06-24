@@ -21,6 +21,7 @@ app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['PERMANENT_SESSION_LIFETIME']=600
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
 
@@ -337,11 +338,7 @@ def messages():
 
 @app.route('/example')
 def example():
-    authenticated = False
-    if current_user.is_authenticated:
-        authenticated = True
-    form = RegisterForm()
-    return render_template('example.html', title=1, form=form, authenticated = authenticated)
+    return render_template('example.html')
 
 
 #Марс---------------------------------------------------------------------
