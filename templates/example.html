@@ -1,32 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="wrapper">
-	<main class="main">
-		<div class="quiz__head">
-				<form name="quiz" action="{{url_for('proforient')}}" method="post">
-					<p><input type="hidden" name="name_test" value="Тест на профориентацию" required />
-					<p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
-					<input type="hidden" data-index="1" name="result" id="result" />
-					<div class="head__content" id="head"></div>
-					<input type="hidden" id="submit" class="btn btn-success" onClick="Check_result()" type="Submit" value="Завершить тестирование" />
-				</form>
-		</div>
 
-		<div class="quiz__body">
-			<div class="buttons">
-				<div class="buttons__content" id="buttons">
-					<button class="button">Default button</button><br>
-					<button class="button button_wrong">Wrong answer</button><br>
-					<button class="button button_correct">Correct answer</button><br>
-					<button class="button button_passive">Unclicked button</button><br>
-				</div>
-			</div>
-			<p></p>
-			<div class="quiz__footer">
-				<div class="footer__content" id="pages">0 / 0</div>
-			</div>
-		</div>
-	</main>
-</div>
-<script src="static/js/proforient.js"></script>
+
+<p>
+    <img style="border-radius: 100px;" src="/static/images_avatar/avatar.png"  width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-1.png"  width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-2.png"  width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-3.png"  width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-4.png"  width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-5.png" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-6.png" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-7.png" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-8.png" alt="Фотография 9" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-9.png" alt="Фотография 10" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-10.png" alt="Фотография 11" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-11.png" alt="Фотография 12" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-12.png" alt="Фотография 13" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-13.png" alt="Фотография 14" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-14.png" alt="Фотография 15" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-15.png" alt="Фотография 16" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-16.png" alt="Фотография 17" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-17.png" alt="Фотография 18" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-18.png" alt="Фотография 19" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-19.png" alt="Фотография 20" width="120" height="120">
+    <img style="border-radius: 100px;"  src="/static/images_avatar/avatar-20.png" alt="Фотография 21" width="120" height="120">
+  </p>
+
 {% endblock %}
