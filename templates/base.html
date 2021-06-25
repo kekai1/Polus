@@ -55,7 +55,6 @@
         <ul class="nav nav-pills ">
              {% if authenticated %}
             <div class="sign-wrap-4 " >
-                <a class="btn btn-outline-light" href="/tests">Пройти тестирование</a>
                 <a class="btn btn-outline-light"  class="" href="/mars">Полет на Марс!</a>
                 <li class="btn nav-item dropdown " >
                     <a class="" href="#" id="myDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,6 +82,7 @@
                         <li style="color:#FFFFF">{{ current_user.getName() }}<li>{{ current_user.getEmail() }}</li>
                     </ul>
             <div>
+                <a class="dropdown-item" href="/tests">Пройти тестирование</a>
                 <a class="dropdown-item" href="/profile">Мои результаты</a>
                 <a class="dropdown-item" href="/raiting" >Рейтинговая таблица</a>
                 <hr>

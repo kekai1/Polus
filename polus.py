@@ -100,7 +100,7 @@ def test_liderPotenzial():
     if chek:
         if request.method == "POST":
                 res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
-                return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+                return redirect('profile')
 
         return render_template("tests/test_liderPotenzial.html", tests = dbase.getPostsAnonce(), authenticated = authenticated)
     else:
@@ -119,7 +119,7 @@ def aizek_temperament():
     if chek:
         if request.method == "POST":
             res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
-            return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+            return redirect('profile')
 
         return render_template("tests/aizek_temperament.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
     else:
