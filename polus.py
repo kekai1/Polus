@@ -8,9 +8,10 @@ from forms import LoginForm, RegisterForm, MessageForm
 from flaskext.mysql import MySQL
 from admin.admin import admin
 
-
+#pygount --format=summary  для того чтобы вывести количество строк в проекте
 SECRET_KEY = os.urandom(32)
 MAX_CONTENT_LENGTH = 1024 * 1024
+
 
 #Конфигурационные настройки проекта, и связь с БД-----------------------------------------------
 app = Flask(__name__)
@@ -152,8 +153,7 @@ def proforient():
     if chek:
         if request.method == "POST":
             res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
-            return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
-
+            return redirect('profile')
         return render_template("tests/proforient.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')

@@ -1,266 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <span style='font-size:12.0pt;'>
-    <script type="text/javascript">
-    // Заголовок страницы (h1)
-    var title = "Тест на профориентацию";
-    // Подзаголовок (h2)
-    var subtitle = "Предлагаем вам 20 пар утверждений. Внимательно прочитав оба утверждения, выберите то, которое больше соответствует вашему желанию. Выбор нужно сделать в каждой паре утверждений.";
-    // Это ваши вопросы
-   var questions=[
-{
-	text: "Мне нравится…",
-	answers: ["Ухаживать за животными", " Обслуживать машины, приборы (следить, регулировать)"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Помогать больным людям, лечить их", "Составлять таблицы, схемы, программы вычислительных машин"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: [" Следить за качеством книжных иллюстраций, плакатов, художественных открыток, грампластинок", " Следить за состоянием, развитием растений."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Обрабатывать материалы (дерево, ткань, пластмассу и т.д.)", "Доводить товары до потребителя (рекламировать, продавать)"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Обсуждать научно-популярные книги, статьи", "Обсуждать художественные книг"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Выращивать молодняк животных какой-либо породы", " Тренировать сверстников (или младших) в выполнении каких-либо действий (трудовых, учебных, спортивных"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Копировать рисунки, изображения, настраивать музыкальные инструменты. ", "Управлять каким-либо грузовым, подъёмным, транс портным средством (подъёмным краном, машиной и т.п.)"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Сообщать, разъяснять людям нужные для них сведения в справочном бюро, во время экскурсии и т.д.", "Художественно оформлять выставки, витрины, участвовать в подготовке концертов, пьес и т.п."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Ремонтировать изделия, вещи (одежду, технику), жилище.", "Искать и исправлять ошибки в текстах, таблицах, рисунках"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Лечить животных. ", "Выполнять расчёты, вычисления. "],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Выводить новые сорта растений.", "Конструировать новые виды промышленных изделий (машины, одежду, дома и т.д.)"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Наблюдать, изучать работу кружков художественной самодеятельности.", "Наблюдать, изучать жизнь микробов."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Обслуживать, налаживать медицинские приборы и аппараты.", "Оказывать людям медицинскую помощь при ранениях, ушибах, ожогах и т.п. "],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Составлять точные описания, отчёты о наблюдаемых явлениях, событиях, измеряемых объектах и др ", "Художественно описывать, изображать события наблюдаемые или представляемые."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Делать лабораторные анализы в больнице", "Принимать, осматривать больных, беседовать с ними, назначать лечение"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Красить или расписывать стены помещений, поверхность изделий.", "Осуществлять монтаж здания или сборку машин, приборов."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Организовывать культ походы людей в театры, музеи, на экскурсии, в туристические путешествия и т.п.", "Играть на сцене, принимать участие в концертах."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Изготовлять по чертежам детали, изделия (машины, одежду), строить здания.", "Заниматься черчением, копировать карты, чертежи."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-{
-	text: "Мне нравится…",
-	answers: ["Вести борьбу с болезнями растений, с вредителями леса, сада.", "Работать на машинах (пишущая машина, компьютер, телетайп, телефакс)."],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-},
-];
+<div class="wrapper">
+	<main class="main">
+		<div class="quiz__head">
+				<form name="quiz" action="{{url_for('proforient')}}" method="post">
+					<p><input type="hidden" name="name_test" value="Тест на профориентацию" required />
+					<p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
+					<input type="hidden" data-index="1" name="result" id="result" />
+					<div class="head__content" id="head"></div>
+					<input type="hidden" id="submit" class="btn btn-success" onClick="Check_result()" type="Submit" value="Завершить тестирование" />
+				</form>
+		</div>
 
-    var yourAns = new Array;
-    var score = 0, priroda=0, tehnica=0, chelovek=0, znak=0, hudoz=0;
-
-    function Engine(question, answer) {yourAns[question]=answer;}
-
-    function Score(){
-       var answerText = "Результаты:\n";
-       for(var i = 0; i < yourAns.length; ++i){
-        var num = i+1;
-        if(yourAns[i]==questions[i].correctAnswer)
-        {
-            if(i==0){ priroda+=1; }
-            if(i==1){ chelovek+=1; }
-            if(i==2){ hudoz+=1; }
-            if(i==3){ tehnica+=1; }
-            if(i==4){ znak+=1; }
-            if(i==5){ priroda+=1; }
-            if(i==6){ hudoz+=1; }
-            if(i==7){ chelovek+=1; }
-            if(i==8){ tehnica+=1; }
-            if(i==9){ priroda+=1; }
-            if(i==10){ priroda+=1; }
-            if(i==11){ chelovek+=1; }
-            if(i==12){ hudoz+=1; }
-            if(i==13){ tehnica+=1; }
-            if(i==14){ znak+=1; }
-            if(i==15){ priroda+=1; }
-            if(i==16){ hudoz+=1; }
-            if(i==17){ chelovek+=1; }
-            if(i==18){ tehnica+=1; }
-            if(i==19){ priroda+=1; }
-        }
-        if(yourAns[i]==questions[i].correctAnswer1)
-        {
-            if(i==0){ tehnica+=1; }
-            if(i==1){ znak+=1; }
-            if(i==2){ priroda+=1; }
-            if(i==3){ chelovek+=1; }
-            if(i==4){ hudoz+=1; }
-            if(i==5){ chelovek+=1; }
-            if(i==6){ tehnica+=1; }
-            if(i==7){ hudoz+=1; }
-            if(i==8){ znak+=1; }
-            if(i==9){ znak+=1; }
-            if(i==10){ tehnica+=1; }
-            if(i==11){ znak+=1; }
-            if(i==12){ priroda+=1; }
-            if(i==13){ chelovek+=1; }
-            if(i==14){ hudoz+=1; }
-            if(i==15){ chelovek+=1; }
-            if(i==16){ tehnica+=1; }
-            if(i==17){ hudoz+=1; }
-            if(i==18){ znak+=1; }
-            if(i==19){ znak+=1; }
-        }
-        }
-
-        score = Math.max(priroda, tehnica, chelovek, znak, hudoz);
-        if(score == priroda)
-        {
-            answerText="Человек — природа. Сюда входят профессии, в которых человек имеет дело с различными явлениями неживой и живой природы, например биолог, географ, геолог, математик, физик, химик и другие профессии, относящиеся к разряду естественных наук.";
-            document.getElementById('score').value = answerText;
-            alert(answerText);
-         }
-        else if(score == tehnica)
-        {
-           answerText="Человек — техника. В эту группу профессий включены различные виды трудовой деятельности, в которых человек имеет дело с техникой, её использованием или конструированием, например профессия инженера, оператора, машиниста, механизатора, сварщика и т.п";
-           document.getElementById('score').value = answerText;
-           alert(answerText);
-         }
-        else if(score == chelovek)
-        {
-            answerText="Человек — человек. Сюда включены все виды профессий, предполагающих взаимодействие людей, например политика, религия, педагогика, психология, медицина, торговля, право. ";
-            document.getElementById('score').value = answerText;
-            alert(answerText);
-        }
-        else if(score == znak)
-        {
-           answerText="Человек — знаковая система. В эту группу включены профессии, касающиеся создания, изучения и использования различных знаковых систем, например лингвистика, языки математического программирования, способы графического представления результатов наблюдений и т.п. ";
-           document.getElementById('score').value = answerText;
-            alert(answerText);
-
-         }
-        else if(score == hudoz)
-        {
-            answerText="Человек — художественный образ. Эта группа профессий представляет собой различные виды художественно-творческого труда, например литература, музыка, театр, изобразительное искусство.";
-            document.getElementById('score').value = answerText;
-           alert(answerText);
-        }
-
-
-
-
-
-       yourAns = [];
-       score = 0, priroda=0, tehnica=0, chelovek=0, znak=0, hudoz=0;
-       clearForm("quiz");
-    }
-    function clearForm(name) {
-       var f = document.forms[name];
-       for(var i = 0; i < f.elements.length; ++i) {
-        if(f.elements[i].checked)
-            f.elements[i].checked = false;
-    }
-    }
-    </script>
-
-    <style>
-    span.quest {font-weight: bold;}
-    </style>
-
-    <h1><script>document.write(title)</script></h1>
-    <h2><script>document.write(subtitle)</script></h2>
-
-
-
-
-    <form name="quiz" action="{{url_for('proforient')}}" method="post">
-        <ol>
-        <script>
-        for(var q=0; q<questions.length; ++q) {
-           var question = questions[q];
-           var idx = 1 + q;
-
-           document.writeln('<li><span class="quest">' + question.text + '</span><br/>');
-           for(var i in question.answers) {
-            document.writeln('<input type=radio name="q' + idx + '" value="' + i +
-            '" onClick="Engine(' + q + ', this.value)">' + question.answers[i] + '<br/>');
-        }
-        }
-        </script>
-        </ol>
-         <p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
-         <p><input type="hidden" name="name_test" value="Тест на профориентацию" required />
-         <input type="hidden" data-index="1" name="result" id="score" />
-        <input class="btn btn-success" type="Submit" onClick="Score()" value="Проверить результаты" />
-    </form>
-
+		<div class="quiz__body">
+			<div class="buttons">
+				<div class="buttons__content" id="buttons">
+					<button class="button">Default button</button><br>
+					<button class="button button_wrong">Wrong answer</button><br>
+					<button class="button button_correct">Correct answer</button><br>
+					<button class="button button_passive">Unclicked button</button><br>
+				</div>
+			</div>
+			<p></p>
+			<div class="quiz__footer">
+				<div class="footer__content" id="pages">0 / 0</div>
+			</div>
+		</div>
+	</main>
+</div>
+<script src="static/js/proforient.js"></script>
 {% endblock %}
