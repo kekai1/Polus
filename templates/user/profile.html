@@ -6,9 +6,12 @@
   <div class="row h-75" style="margin: 0 0 5px 0;">
     	<p></p>
         <h2 style="margin: 0 0 0 10px;">Достижения и результаты тестирования:</h2>
+       {% if result_test %}
         <button style="position: absolute; right: 0; margin: 2px 2em;" id="button_avatar" type="button" onClick="sortList(document.getElementsByClassName('list-posts')[0]);" class="btn btn-secondary btn-xs">Сначала новые</button>
+        {% endif %}
   </div>
   <div class="row h-25">
+      {% if result_test %}
 	  <form>
         <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
                 <ol class ="list-posts" id="my_rezults">
@@ -22,6 +25,7 @@
                 <p></p>
         </div>
 	  </form>
+      {% endif %}
   </div>
 </div>
 <script src="static/js/sort_lists.js"></script>
