@@ -10,7 +10,3 @@ function get_avatar(){
        document.getElementById( "button_avatar" ).className  = "btn btn-outline-success";
     }
 }
-
-function selected_avatar(src){
-   document.querySelector('input[type="file"]').value = src;
-}
