@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<section class="col border ру-2 ">
-    <p></p>
-    <ul class = roundcorner>
-        {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{cat}}">{{msg}}</div>
-        {% endfor %}
-        <p></p>
-        {% for p in tests%}
-        <li>
-            <p class="title"><a href="{{ p[3] }}">{{ p[1] }}</a></p>
-            <p class="annonce">{{ p[2] | striptags }}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    <p></p>
-
-</section>
+<form>
+    <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
+        <section class="col border ру-2 ">
+            <p></p>
+            <ul class = roundcorner>
+                <button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="left" data-content="Любой тест можно пройти только один раз. Без повторного прохождения! Пожалуйста отвечайте на вопросы внимательно.">Нажать сюда</button>                {% for cat, msg in get_flashed_messages(True) %}
+                <div class="flash {{cat}}">{{msg}}</div>
+                {% endfor %}
+                <p></p>
+                {% for p in test_not_finish %}
+                <li>
+                    <p><a href="{{ p[3] }}">{{ p[1] }}</a></p>
+                    <p>{{ p[2] | striptags }}</p>
+                </li>
+                {% endfor %}
+                {% for p in test_finish %}
+                <li class="disabled" style="list-style-type:'✓'; color: #808080;">
+                    <p><a href="{{ p[3] }}" style="pointer-events: none; color: #808080;">{{ p[1] }}</a></p>
+                    <p>{{ p[2] | striptags }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+            <p></p>
+        </section>
+     </div>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
 {% endblock %}

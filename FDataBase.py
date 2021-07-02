@@ -20,51 +20,6 @@ class FDataBase:
         return []
 
 
-    def addPost(self, title, text, url):
-        try:
-            self.__cur.execute(f"SELECT COUNT() as `count` FROM posts WHERE url LIKE '{url}'")
-            res = self.__cur.fetchone()
-            if res['count'] > 0:
-                print("Статья с таким url уже существует")
-                return False
-
-            base = url_for('static', filename='images_html')
-
-            text = re.sub(r"(?P<tag><img\s+[^>]*src=)(?P<quote>[\"'])(?P<url>.+?)(?P=quote)>",
-                          "\\g<tag>" + base + "/\\g<url>>",
-                          text)
-
-            tm = math.floor(time.time())
-            self.__cur.execute("INSERT INTO tests VALUES(NULL, ?, ?, ?, ?)", (title, text, url, tm))
-            self.__db.commit()
-        except sqlite3.Error as e:
-            print("Ошибка добавления статьи в БД " + str(e))
-            return False
-        return True
-
-
-
-    def getPost(self, alias):
-        try:
-            self.__cur.execute(f"SELECT title_test, text_test FROM tests WHERE url LIKE ? LIMIT 1", (alias))
-            res = self.__cur.fetchone()
-            if res:
-                return res
-        except sqlite3.Error as e:
-            print("Error insert artice in Database " + str(e))
-        return (False, False)
-
-
-    def getPostsAnonce(self):
-        try:
-            self.__cur.execute(f"SELECT id_test, title_test, text_test, url FROM tests")
-            res = self.__cur.fetchall()
-            if res: return res
-        except sqlite3.Error as e:
-            print("Error insert article in Database "+str(e))
-        return []
-
-
     def addUser(self, name, email, hpsw):
         try:
             self.__cur.execute(f"SELECT COUNT(*) AS 'count' FROM users WHERE email_user like '{email}'")
@@ -129,15 +84,26 @@ class FDataBase:
         return True
 
 
-    def Addresults_test(self, name_test, id_user, result):
+    ###РАБОТА С ТЕСТАМИ---------------------------------------------------------------------------------
+
+    def getID_test(self, name_test):
+        try:
+            self.__cur.execute(f"SELECT id_test FROM tests WHERE title_test = '{name_test}'")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database " + str(e))
+        return []
+
+
+    def Addresults_test(self, name_test, id_user, result, id_test):
         try:
             if result == '': return False
-            self.__cur.execute(f"INSERT INTO result_test(name_test, id_user, result) VALUES(%s, %s, %s)", (name_test, id_user, result))
+            self.__cur.execute(f"INSERT INTO result_test(name_test, id_test, id_user, result) VALUES(%s, %s, %s, %s)", (name_test, id_test, id_user, result))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка в БД " + str(e))
         return True
-
 
 
     def getresults_test(self, id_user):
@@ -175,6 +141,39 @@ class FDataBase:
         except sqlite3.Error as e:
             print("Ошибка в БД " + str(e))
         return True
+
+
+    def getTests(self):
+        try:
+            self.__cur.execute(f"SELECT id_test, title_test, text_test, url FROM tests")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+
+    def getTest_finish(self, id_user):
+        try:
+            self.__cur.execute(f"SELECT * FROM tests WHERE id_test in (SELECT id_test FROM result_test WHERE id_user = '{id_user}')")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+
+    def getTest_not_finish(self, id_user):
+        try:
+            self.__cur.execute(f"SELECT * FROM tests WHERE id_test not in (SELECT id_test FROM result_test WHERE id_user = '{id_user}')")
+            res = self.__cur.fetchall()
+            if res: return res
+        except sqlite3.Error as e:
+            print("Error insert article in Database "+str(e))
+        return []
+
+    ###РАБОТА С ТЕСТАМИ КОНЕЦ---------------------------------------------------------------------------------
+
 
 
     def add_message(self, id_sender, id_receptient, body):

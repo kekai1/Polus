@@ -3,22 +3,31 @@
 
 
 <div class="container-fluid d-flex h-100 flex-column">
-  <div class="row h-75" style="margin: 0 0 5px 0;">
+  <div class="row h-75">
     	<p></p>
         <h2 style="margin: 0 0 0 10px;">Достижения и результаты тестирования:</h2>
        {% if result_test %}
         <button style="position: absolute; right: 0; margin: 2px 2em;" id="button_avatar" type="button" onClick="sortList(document.getElementsByClassName('list-posts')[0]);" class="btn btn-secondary btn-xs">Сначала новые</button>
         {% endif %}
   </div>
-  <div class="row h-25">
+  <div class="row h-25" style="margin: 10px 0 0 0;">
       {% if result_test %}
 	  <form>
-        <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
+        <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 70%;">
                 <ol class ="list-posts" id="my_rezults">
                     {% for p in result_test %}
                         <ul>
-                        <p class="btn-success">{{ p[1] }}</p>
-                        <p class="btn-white">{{ p[3] }}</p>
+                            <div class="alert">
+                                <table style="width: 100%;">
+                                   <tr>
+                                    <td class="alert alert-primary" style="text-align: left;  font-size: 16pt; ">{{ p[1] }}</td>
+                                    <td class="alert alert-primary" style="text-align: right;">{{ moment(p[5]).format('lll') }}</td>
+                                   </tr>
+                                  </table>
+                                <hr>
+                                <p class="btn-white">{{ p[4] }}</p>
+
+                            </div>
                         </ul>
                     {% endfor %}
                 </ol>
@@ -29,4 +38,5 @@
   </div>
 </div>
 <script src="static/js/sort_lists.js"></script>
+<div id="ajax"></div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory
+from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory, jsonify
 import os
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,6 +7,8 @@ from UserLogin import UserLogin
 from forms import LoginForm, RegisterForm, MessageForm
 from flaskext.mysql import MySQL
 from admin.admin import admin
+from flask_moment import Moment
+
 
 #pygount --format=summary  для того чтобы вывести количество строк в проекте
 SECRET_KEY = os.urandom(32)
@@ -15,6 +17,7 @@ MAX_CONTENT_LENGTH = 1024 * 1024
 
 #Конфигурационные настройки проекта, и связь с БД-----------------------------------------------
 app = Flask(__name__)
+app.debug = True
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'bafce1efb1c421'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
@@ -24,6 +27,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 app.config['PERMANENT_SESSION_LIFETIME']=600
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 mysql.init_app(app)
+moment = Moment(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
 
 app.register_blueprint(admin, url_prefix='/admin')
@@ -86,8 +90,8 @@ def tests():
     authenticated = False
     if current_user.is_authenticated:
         authenticated = True
-
-    return render_template("tests/tests.html", tests = dbase.getPostsAnonce(), authenticated = authenticated)
+    id_user = current_user.get_id()
+    return render_template("tests/tests.html", test_not_finish=dbase.getTest_not_finish(id_user), test_finish= dbase.getTest_finish(id_user), authenticated = authenticated)
 
 
 
@@ -100,13 +104,14 @@ def test_liderPotenzial():
         authenticated = True
     if chek:
         if request.method == "POST":
-                res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
+                id_test = dbase.getID_test(request.form['name_test'])
+                res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test[0])
                 return redirect('profile')
 
-        return render_template("tests/test_liderPotenzial.html", tests = dbase.getPostsAnonce(), authenticated = authenticated)
+        return render_template("tests/test_liderPotenzial.html", tests = dbase.getTests(), authenticated = authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 
@@ -119,13 +124,13 @@ def aizek_temperament():
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
+            id_test = dbase.getID_test(request.form['name_test'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
             return redirect('profile')
-
-        return render_template("tests/aizek_temperament.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("tests/aizek_temperament.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 
@@ -136,28 +141,29 @@ def kettel():
     if current_user.is_authenticated:
         authenticated = True
     if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
-            return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
-
-    return render_template("tests/kettel.html", tests = dbase.getPostsAnonce(), authenticated = authenticated)
+        id_test = dbase.getID_test(request.form['name_test'])
+        res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
+    return render_template("tests/kettel.html", tests = dbase.getTests(), authenticated = authenticated)
 
 
 
 @app.route('/proforient', methods = ["GET", "POST"])
 @login_required
 def proforient():
-    chek = dbase.check_resultTest(current_user.get_id(), "Тест на профориентацию")
+    chek = dbase.check_resultTest(current_user.get_id(), "Тест на профориентацию по методике академика Е.А. Климова")
     authenticated = False
     if current_user.is_authenticated:
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'])
+            id_test = dbase.getID_test(request.form['name_test'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
             return redirect('profile')
-        return render_template("tests/proforient.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("tests/proforient.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/tests.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
 #Страницы тестов КОНЕЦ-----------------------------------------------------
 
 
@@ -245,6 +251,7 @@ def profile():
         authenticated = True
     id_user = current_user.get_id()
     return render_template("user/profile.html", authenticated = authenticated, result_test = dbase.getresults_test(id_user))
+
 
 
 @app.route('/userava')
@@ -360,13 +367,13 @@ def ekonomist():
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['user_id'], request.form['result'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], 999)
             return render_template("mars/mars.html", authenticated=authenticated)
 
-        return render_template("mars/ekonomist.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/ekonomist.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже были в данной лаборатории, пожалуйста, попробуйте выбрать другую.', category='error')
-        return render_template("mars/mars.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/mars.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 
@@ -379,13 +386,13 @@ def bezopasnik():
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['user_id'], request.form['result'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], 999)
             return render_template("mars/mars.html", title="Полет на Марс", authenticated=authenticated)
 
-        return render_template("mars/bezopasnik.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/bezopasnik.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже были в данной лаборатории, пожалуйста, попробуйте выбрать другую.', category='error')
-        return render_template("mars/mars.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/mars.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 @app.route('/HR_specialist', methods = ["GET", "POST"])
@@ -397,13 +404,13 @@ def HR_specialist():
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['user_id'], request.form['result'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], 999)
             return render_template("mars/mars.html", title="Полет на Марс", authenticated=authenticated)
 
-        return render_template("mars/HR_specialist.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/HR_specialist.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже были в данной лаборатории, пожалуйста, попробуйте выбрать другую.', category='error')
-        return render_template("mars/mars.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/mars.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 @app.route('/inzener_konstruktor', methods = ["GET", "POST"])
@@ -415,13 +422,13 @@ def inzener_konstruktor():
         authenticated = True
     if chek:
         if request.method == "POST":
-            res = dbase.Addresults_test(request.form['name_test'], request.form['user_id'], request.form['result'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], 999)
             return render_template("mars/mars.html", title="Полет на Марс", authenticated=authenticated)
 
-        return render_template("mars/inzener_konstruktor.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/inzener_konstruktor.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже были в данной лаборатории, пожалуйста, попробуйте выбрать другую.', category='error')
-        return render_template("mars/mars.html", tests=dbase.getPostsAnonce(), authenticated=authenticated)
+        return render_template("mars/mars.html", tests=dbase.getTests(), authenticated=authenticated)
 #Марс КОНЕЦ---------------------------------------------------------------------
 
 
