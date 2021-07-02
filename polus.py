@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory, jsonify
+from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory
 import os
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash

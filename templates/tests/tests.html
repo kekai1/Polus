@@ -6,7 +6,8 @@
         <section class="col border ру-2 ">
             <p></p>
             <ul class = roundcorner>
-                <button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="left" data-content="Любой тест можно пройти только один раз. Без повторного прохождения! Пожалуйста отвечайте на вопросы внимательно.">Нажать сюда</button>                {% for cat, msg in get_flashed_messages(True) %}
+                <button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="left" data-content="Любой тест можно пройти только один раз. Без повторного прохождения! Пожалуйста отвечайте на вопросы внимательно.">Нажать сюда</button>
+                {% for cat, msg in get_flashed_messages(True) %}
                 <div class="flash {{cat}}">{{msg}}</div>
                 {% endfor %}
                 <p></p>
