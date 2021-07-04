@@ -8,6 +8,7 @@ beautifulsoup4==4.8.1
 bencode==1.0
 blinker==1.4
 bootstrap4==0.1.0
+cachelib==0.2.0
 certifi==2019.3.9
 cffi==1.14.4
 chardet==3.0.4
@@ -25,8 +26,11 @@ filelock==3.0.12
 Flask==1.1.2
 Flask-Login==0.5.0
 Flask-Mail==0.9.1
+Flask-Moment==1.0.1
 Flask-MySQL==1.5.2
+Flask-Session==0.4.0
 Flask-SQLAlchemy==2.4.4
+Flask-SSLify==0.1.5
 Flask-WTF==0.14.3
 geojson==2.4.1
 gunicorn==20.0.4
@@ -44,6 +48,8 @@ packaging==20.8
 pluggy==0.13.1
 py==1.10.0
 pycparser==2.20
+Pygments==2.9.0
+pygount==1.2.4
 PyJWT==2.1.0
 PyMySQL==1.0.2
 pyOpenSSL==20.0.1
@@ -53,6 +59,7 @@ pytest==6.2.1
 python-dateutil==2.8.1
 pytz==2019.2
 requests==2.22.0
+samesite-compat-check==0.2.0
 self==2020.12.3
 six==1.14.0
 soupsieve==1.9.4

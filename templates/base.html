@@ -23,7 +23,6 @@
     {{ moment.include_moment() }}
     {{ moment.lang("ru") }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}" type="text/css">
-
     <style type="text/css">
    BODY {
       background: url(/static/images_html/index_image/background.jpg) no-repeat;
@@ -49,15 +48,15 @@
 <div class="navbar navbar-light border-0">
    {% if title!=1 %}
         <div class="">
-              <a style="color: white;" href="/">Главная <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <a style="color: white; margin: 0 0 0 10px;" href="/">Главная <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
                 <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                 </svg></a>
         </div>
         <ul class="nav nav-pills ">
-             {% if authenticated %}
+            {% if authenticated %}
             <div class="sign-wrap-4 " >
-           <!-- <a class="btn btn-outline-light"  class="" href="/mars">Полет на Марс!</a> -->
+            <!-- <a class="btn btn-outline-light"  class="" href="/mars">Полет на Марс!</a> -->
                 <li class="btn nav-item dropdown " >
                     <a class="" href="#" id="myDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img style=" border-radius: 100px; "src="{{ url_for('userava') }}" width="37" height="37"></a>
@@ -70,10 +69,11 @@
             {% else %}
 
                 <li class="nav-item" >
-                    <a class="btn btn-outline-light" href="/register">Регистрация</a>
-                    <a class="btn btn-outline-light" href="/login">Авторизация</a>
+                    <a style="color: white; margin: 0 0 0 10px;" href="/register">Регистрация</a>
+                    <a style="color: white; margin: 0 0 0 10px;" href="/login">Авторизация</a>
                 </li>
             {% endif %}
+        </ul>
     {% endif %}
 </div>
 <div class="row" style="padding: 0 0 0px 29px;">

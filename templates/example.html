@@ -1,29 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form>
+    <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
+        <section class="col border ру-2 ">
+             <div id="Home" class="tabcontent">
+              <h3>Home</h3>
+              <p>Home is where the heart is..</p>
+            </div>
 
-<section class="col border ру-2 ">
-    <p></p>
-    <ul class = roundcorner>
-        {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{cat}}">{{msg}}</div>
-        {% endfor %}
-        <p></p>
-        {% for p in tests %}
-        <li>
-            {% for f in test_finish %}
-                {% if p[1] == f[1] %}
-                    <p class=""><a href="{{ p[3] }}">{{ p[1] }}</a></p>
-                    <p class="">{{ p[2] | striptags }}</p>
-                {% else %}
-                    <p class=""><a href="{{ p[3] }}">{{ p[1] }}</a></p>
-                    <p class="">{{ p[2] | striptags }}</p>
-                {% endif %}
-            {% endfor %}
-        </li>
-        {% endfor %}
-    </ul>
-    <p></p>
+            <div id="News" class="tabcontent">
+              <h3>News</h3>
+              <p>Some news this fine day!</p>
+            </div>
 
-</section>
+            <div id="Contact" class="tabcontent">
+              <h3>Contact</h3>
+              <p>Get in touch, or swing by for a cup of coffee.</p>
+            </div>
+
+            <div id="About" class="tabcontent">
+              <h3>About</h3>
+              <p>Who we are and what we do.</p>
+            </div>
+
+            <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+            <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+            <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+            <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+        </section>
+     </div>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+<script src="static/js/open.js"></script>
 {% endblock %}

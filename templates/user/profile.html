@@ -5,7 +5,7 @@
 <div class="container-fluid d-flex h-100 flex-column">
   <div class="row h-75">
     	<p></p>
-        <h2 style="margin: 0 0 0 10px;">Достижения и результаты тестирования:</h2>
+        <h2 style="margin: 0 0 0 10px;">Результаты тестирования:</h2>
        {% if result_test %}
         <button style="position: absolute; right: 0; margin: 2px 2em;" id="button_avatar" type="button" onClick="sortList(document.getElementsByClassName('list-posts')[0]);" class="btn btn-secondary btn-xs">Сначала новые</button>
         {% endif %}
@@ -13,7 +13,7 @@
   <div class="row h-25" style="margin: 10px 0 0 0;">
       {% if result_test %}
 	  <form>
-        <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 70%;">
+        <div data-spy="scroll" data-offset="0"  style="overflow: scroll; min-height: 500px; height: 25%;">
                 <ol class ="list-posts" id="my_rezults">
                     {% for p in result_test %}
                         <ul>
@@ -25,7 +25,7 @@
                                    </tr>
                                   </table>
                                 <hr>
-                                <p class="btn-white">{{ p[4] }}</p>
+                                <p align="justify" class="btn-white">{{ p[4] }}</p>
 
                             </div>
                         </ul>
@@ -38,5 +38,4 @@
   </div>
 </div>
 <script src="static/js/sort_lists.js"></script>
-<div id="ajax"></div>
 {% endblock %}

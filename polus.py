@@ -137,14 +137,19 @@ def aizek_temperament():
 @app.route('/kettel', methods = ["GET", "POST"])
 @login_required
 def kettel():
+    chek = dbase.check_resultTest(current_user.get_id(), "Опросник Кеттелла для подростков")
     authenticated = False
     if current_user.is_authenticated:
         authenticated = True
-    if request.method == "POST":
-        id_test = dbase.getID_test(request.form['name_test'])
-        res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
-        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
-    return render_template("tests/kettel.html", tests = dbase.getTests(), authenticated = authenticated)
+    if chek:
+        if request.method == "POST":
+            id_test = dbase.getID_test(request.form['name_test'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
+            return redirect('profile')
+        return render_template("tests/kettel.html", tests=dbase.getTests(), authenticated=authenticated)
+    else:
+        flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
+        return render_template("tests/kettel.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 

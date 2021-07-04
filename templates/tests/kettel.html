@@ -1,211 +1,32 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <span style='font-size:12.0pt;'>
-    <script type="text/javascript">
-    // Заголовок страницы (h1)
-    var title = "Опросник Кеттелла для подростков";
-    // Подзаголовок (h2)
-    var subtitle = "Инструкция к опроснику Кеттелла для подростков:
-Тебе будет предложен ряд вопросов, каждый из которых имеет три варианта ответа. Твоя задача состоит в том, чтобы из трех предложенных вариантов ответа выбрать один, отражающий твое мнение или являющийся правильным по твоему мнению.
-Выбранный вариант ответа ("а", "в" или "с") регистрируется напротив соответствующего номера вопроса. Задание выполняется последовательно, с первого до последнего вопроса, ничего не пропуская. Работаем быстро, долго не раздумывая.
-Не следует слишком часто выбирать к промежуточные варианты ответа ("в"). Выбираем такой ответ только тогда, когда не можем ответить иначе. Не нужно стремится произвести впечатление своими хорошими ответами. Любые ответы нигде обсуждаться не будут.
-";
-    // Это ваши вопросы
-   var questions=[
-{
-	text: "Если некое авторитетное лицо публично высказывает мнение, которое я считаю неверным, я постараюсь, чтобы присутствующие выслушали и мою точку зрения",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "В детстве меня частенько называли непослушным ребенком",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Убежден(а), что окружающий мир может быть улучшен",
-    answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Не люблю, когда друзья и родные пытаются меня опекать, досаждают советами",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "В ситуациях, требующих серьезного решения, я не склонен(а) к долгим колебаниям",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "По-моему, большинство общественно-политических проблем возникает из-за недостаточной твердости ответственных руководителей",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Я не смущаюсь, если мне приходится кого-то упрекать",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2// нумерация ответов с нуля!
-},
-{
-	text: "Если с каким-то делом невозможно справиться одному, то для его выполнения мне нужны помощники, а не советчики",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "В спорах всегда стараюсь оставить за собой последнее слово",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Считаю, что никакой прогресс немыслим без стремления людей к превосходству над другими",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2// нумерация ответов с нуля!
-},
-{
-	text: "Часто мне приходится брать на себя ответственность, потому что другие недостаточно решительны",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Не верю в абсолютное равноправие в супружеских отношениях, в семье предпочел(а) бы быть главой",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "Когда в гостях никто не решается взять с блюда последний кусок торта, я спокойно могу это сделать",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2// нумерация ответов с нуля!
-},
-{
-	text: "Люблю быть в центре внимания",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-},
-{
-	text: "В своей карьере готов смириться с ролью подчиненного только как с временной",
-	answers: ["да", "нет", "не знаю или не уверен"],
-	correctAnswer: 0,
-	correctAnswer1: 1,
-	correctAnswer2: 2
-}
-];
+<div class="wrapper">
+	<main class="main">
+		<div class="quiz__head">
+				<form name="quiz" action="{{url_for('kettel')}}" method="post">
+					<p><input type="hidden" name="name_test" value="Опросник Кеттелла для подростков" required />
+					<p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
+					<input type="hidden" data-index="1" name="result" id="result" />
+					<div class="head__content" id="head"></div>
+					<input type="hidden" id="submit" class="btn btn-success" onClick="Check_result()" type="Submit" value="Завершить тестирование" />
+				</form>
+		</div>
 
-    var yourAns = new Array;
-    var score = 0;
-
-    function Engine(question, answer) {yourAns[question]=answer;}
-
-    function Score(){
-       var answerText = "Результаты:\n";
-       for(var i = 0; i < yourAns.length; ++i){
-        var num = i+1;
-        if(yourAns[i]==questions[i].correctAnswer)
-        {
-            score+=10;
-         }
-        if(yourAns[i]==questions[i].correctAnswer1)
-        {
-            score+=0;
-         }
-        if(yourAns[i]==questions[i].correctAnswer2)
-        {
-            score+=5;
-         }
-           }
-
-
-        if(score<100 && score>=50)
-        {
-            answerText="\nВы обладаете исключительно ценным качеством – умением принимать роль ведущего или ведомого в зависимости от обстоятельств. Уважение к авторитету не мешает вам иметь собственную точку зрения. Для вас найдется место в любом коллективе. Остается только выбрать такое место, которое бы вас устраивало";
-            document.getElementById('score').value = answerText;
-         }
-        if(score>=100)
-        {
-           answerText="\nВам не занимать инициативы и уверенности в себе. Похоже, сама природа уготовила вам роль вожака, снабдив для этого необходимыми качествами – смелостью, целеустремленностью, твердой волей. Однако у этих достоинств бывает и оборотная сторона – завышенная самооценка, бесцеремонность, неумение считаться с чужими интересами. Вы сумеете добиться немалых успехов, если будете помнить: люди охотно идут за лидерами, но недолюбливают диктаторов. ";
-           document.getElementById('score').value = answerText;
-         }
-        if(score<50)
-        {
-            answerText="\nПо своей натуре вы более склонны принимать роль исполнителя и подчиненного. Вас тяготит личная ответственность, и вы скорее предпочтете следовать директивам. А может быть, вы способны на большее? Чтобы добиться успеха, почаще вспоминайте мудрый афоризм: «Два сорта людей никогда ничего не добьются: те, кто не умеет выполнять указания, и те, кто умеет только выполнять указания».";
-            document.getElementById('score').value = answerText;
-        }
-
-
-
-
-       alert(answerText);
-       yourAns = [];
-       score = 0;
-       clearForm("quiz");
-    }
-    function clearForm(name) {
-       var f = document.forms[name];
-       for(var i = 0; i < f.elements.length; ++i) {
-        if(f.elements[i].checked)
-            f.elements[i].checked = false;
-    }
-    }
-    </script>
-
-    <style>
-    span.quest {font-weight: bold;}
-    </style>
-
-    <h1><script>document.write(title)</script></h1>
-    <h2><script>document.write(subtitle)</script></h2>
-
-
-
-
-    <form name="quiz" action="{{url_for('kettel')}}" method="post">
-        <ol>
-        <script>
-        for(var q=0; q<questions.length; ++q) {
-           var question = questions[q];
-           var idx = 1 + q;
-
-           document.writeln('<li><span class="quest">' + question.text + '</span><br/>');
-           for(var i in question.answers) {
-            document.writeln('<input type=radio name="q' + idx + '" value="' + i +
-            '" onClick="Engine(' + q + ', this.value)">' + question.answers[i] + '<br/>');
-        }
-        }
-        </script>
-        </ol>
-         <p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
-         <p><input type="hidden" name="name_test" value="Опросник Кеттелла для подростков" required />
-         <input type="hidden" data-index="1" name="result" id="score" />
-        <input class="btn btn-success" type="Submit" onClick="Score()" value="Проверить результаты" />
-    </form>
-
+		<div class="quiz__body">
+			<div class="buttons">
+				<div class="buttons__content" id="buttons">
+					<button class="button">Default button</button><br>
+					<button class="button button_wrong">Wrong answer</button><br>
+					<button class="button button_correct">Correct answer</button><br>
+					<button class="button button_passive">Unclicked button</button><br>
+				</div>
+			</div>
+			<p></p>
+			<div class="quiz__footer">
+				<div class="footer__content" id="pages">0 / 0</div>
+			</div>
+		</div>
+	</main>
+</div>
+<script src="static/js/tests/kettel.js"></script>
 {% endblock %}
