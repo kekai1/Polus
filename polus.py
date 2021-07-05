@@ -169,6 +169,27 @@ def proforient():
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
         return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
+
+
+
+@app.route('/type_thinking', methods = ["GET", "POST"])
+@login_required
+def type_thinking():
+    chek = dbase.check_resultTest(current_user.get_id(), "Методика «Тип мышления» (методика в модификации Г. Резапкиной)")
+    authenticated = False
+    if current_user.is_authenticated:
+        authenticated = True
+    if chek:
+        if request.method == "POST":
+            id_test = dbase.getID_test(request.form['name_test'])
+            res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
+            print(request.form['result'])
+
+            return redirect('profile')
+        return render_template("tests/type_thinking.html", tests=dbase.getTests(), authenticated=authenticated)
+    else:
+        flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
+        return render_template("tests/type_thinking.html", tests=dbase.getTests(), authenticated=authenticated)
 #Страницы тестов КОНЕЦ-----------------------------------------------------
 
 
@@ -180,25 +201,6 @@ def index():
     if current_user.is_authenticated:
         authenticated = True
     return render_template("index.html", authenticated = authenticated)
-
-
-@app.route("/add_post", methods = ["GET", "POST"])
-@login_required
-def addPost():
-    authenticated = False
-    if current_user.is_authenticated:
-        authenticated = True
-    if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['post']) > 10:
-            res = dbase.addPost(request.form['name'], request.form['post'], request.form['url'])
-            if not res:
-                flash('Ошибка добавления статьи', category = 'error')
-            else:
-                flash('Статья добавлена успешно', category = 'success')
-        else:
-            flash('Ошибка добавления статьи', category = 'error')
-
-    return render_template("add_post.html", authenticated = authenticated)
 
 
 #АВТОРИЗАЦИЯ, РЕГИСТРАЦИЯ И РАБОТА С ПРОФИЛЕМ-----------------------------------------------------
@@ -332,20 +334,6 @@ def raiting():
 
     return render_template("raiting.html",  authenticated = authenticated, users = dbase.getresults_test_forRaiting())
 
-
-
-@app.route('/messages', methods=['GET', 'POST'])
-@login_required
-def messages():
-    authenticated = False
-    if current_user.is_authenticated:
-        authenticated = True
-
-    form = MessageForm()
-    if form.validate_on_submit():
-        msg = dbase.add_message(request.form['id_sender'], request.form['id_receptient'], request.form['body'])
-        flash('Сообщение отправлено!', category = 'success')
-    return render_template('messages.html', form=form, authenticated = authenticated)
 
 
 @app.route('/example')
