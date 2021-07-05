@@ -1,40 +1,16 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<form>
-    <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
-        <section class="col border ру-2 ">
-             <div id="Home" class="tabcontent">
-              <h3>Home</h3>
-              <p>Home is where the heart is..</p>
-            </div>
 
-            <div id="News" class="tabcontent">
-              <h3>News</h3>
-              <p>Some news this fine day!</p>
-            </div>
 
-            <div id="Contact" class="tabcontent">
-              <h3>Contact</h3>
-              <p>Get in touch, or swing by for a cup of coffee.</p>
-            </div>
+<div class="container-fluid d-flex h-100 flex-column">
+  <div class="row h-25" style="margin: 10px 0 0 0;">
+	  <form>
+        <div data-spy="scroll" data-offset="0"  style="overflow: scroll; min-height: 500px; height: 10%;">
 
-            <div id="About" class="tabcontent">
-              <h3>About</h3>
-              <p>Who we are and what we do.</p>
-            </div>
 
-            <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
-            <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
-            <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-            <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
-        </section>
-     </div>
-</form>
-<script type="text/javascript">
-$(document).ready(function(){
-  $('[data-toggle="popover"]').popover();
-});
-</script>
-<script src="static/js/open.js"></script>
+        </div>
+	  </form>
+  </div>
+</div>
+
 {% endblock %}

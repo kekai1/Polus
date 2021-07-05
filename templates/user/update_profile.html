@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container-fluid d-flex h-100 flex-column">
-  <div class="row h-75" >
+  <div class="row h-75" style="padding: 3px 0 0 5px;">
     	<table border="0" class="profile-table">
 			<tr><td valign="top">
 				<div class="">
@@ -24,6 +24,10 @@
 							 <input type="text" name="update_name" value=""
 							 placeholder="{{ current_user.getName() }}" minlength="5"/></li>
 							<li style="color:#000000">Email: {{ current_user.getEmail() }}</li>
+							<p><p>
+
+						</p></p>
+							<p style="color:#000000">Дата регистрации: {{ moment(current_user.getDate()).format('lll') }}</p>
 						</ul>
 					</td>
 					</form>
@@ -32,7 +36,7 @@
 			</tr>
 		</table>
   </div>
-  <div class="row h-25">
+  <div class="row h-25" style="padding: 3px 0 0 5px;">
 	  <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
 		  <button id="button_avatar" type="button" onClick="get_avatar()" class="btn btn-outline-primary" style="padding: 10px 24px;">Выбрать автар из стандартных</button>
 		  <br>

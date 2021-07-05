@@ -80,8 +80,8 @@
     <nav style="background-color: #e3f2fd;">
     {% if authenticated %}
         <ul style="background: linear-gradient(to bottom, #9999ff 0%, #ccffff 100%);">
-                        <p align="left" style="color:#FFFFF"><img src="{{ url_for('userava') }}" width="100" height="100"></a><br>
-                        <li style="color:#FFFFF">{{ current_user.getName() }}<li>{{ current_user.getEmail() }}</li>
+                        <p align="left" style="color:#FFFFF; padding: 3px 0 0 0;" ><img src="{{ url_for('userava') }}" width="100" height="100"></a><br>
+                        <p style="color:#FFFFF">{{ current_user.getName() }}<br>{{ current_user.getEmail() }}</br>
                     </ul>
             <div>
                 <a class="dropdown-item" href="/profile">Мои результаты</a>

@@ -2,8 +2,7 @@
 
 {% block content %}
 <form>
-    <div data-spy="scroll" data-offset="0"  style="overflow: scroll; height: 90%;">
-        <section class="col border ру-2 ">
+    <div data-spy="scroll" data-offset="0"  style="overflow: scroll; min-height: 500px; height: 10%;">
             <p></p>
             <ul class = roundcorner>
                 <button type="button" class="btn btn-primary" data-container="body" data-toggle="popover" data-placement="left" data-content="Любой тест можно пройти только один раз. Без повторного прохождения! Пожалуйста отвечайте на вопросы внимательно.">Прочитать инструкцию</button>
@@ -11,6 +10,7 @@
                 <div class="flash {{cat}}">{{msg}}</div>
                 {% endfor %}
                 <p></p>
+
                 {% for p in test_not_finish %}
                 <li>
                     <p><a href="{{ p[3] }}">{{ p[1] }}</a></p>
@@ -25,7 +25,6 @@
                 {% endfor %}
             </ul>
             <p></p>
-        </section>
      </div>
 </form>
 <script type="text/javascript">

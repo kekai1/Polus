@@ -20,6 +20,9 @@ class UserLogin(UserMixin):
     def getEmail(self):
         return self.__user[2]
 
+    def getDate(self):
+        return self.__user[5]
+
     def getAvatar(self, app):
         img = None
         if not self.__user[4]:
