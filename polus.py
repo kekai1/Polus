@@ -428,8 +428,6 @@ def type_thinking():
         if request.method == "POST":
             id_test = dbase.getID_test(request.form['name_test'])
             res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
-            print(request.form['result'])
-
             return redirect('profile')
         return render_template("tests/type_thinking.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
@@ -448,8 +446,6 @@ def method_profile():
         if request.method == "POST":
             id_test = dbase.getID_test(request.form['name_test'])
             res = dbase.Addresults_test(request.form['name_test'], request.form['id_user'], request.form['result'], id_test)
-            print(request.form['result'])
-
             return redirect('profile')
         return render_template("tests/method_profile.html", tests=dbase.getTests(), authenticated=authenticated)
     else:

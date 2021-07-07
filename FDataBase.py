@@ -108,7 +108,7 @@ class FDataBase:
 
     def getresults_test(self, id_user):
         try:
-            self.__cur.execute(f"SELECT * FROM result_test WHERE result_test.id_user = {id_user}")
+            self.__cur.execute(f"SELECT * FROM result_test WHERE id_user = {id_user} ORDER BY test_date DESC")
             res = self.__cur.fetchall()
             if res: return res
         except sqlite3.Error as e:
@@ -173,25 +173,3 @@ class FDataBase:
         return []
 
     ###РАБОТА С ТЕСТАМИ КОНЕЦ---------------------------------------------------------------------------------
-
-
-
-    def add_message(self, id_sender, id_receptient, body):
-        try:
-            if body == '':
-                return False
-            self.__cur.execute(f"INSERT INTO messages(id_sender, id_receptient, body) VALUES(%s, %s, %s)", (id_sender, id_receptient, body))
-            self.__db.commit()
-        except sqlite3.Error as e:
-            print("Ошибка в БД " + str(e))
-        return True
-
-
-    def get_messages(self, id_sender, id_receptient):
-        try:
-            self.__cur.execute(f"SELECT * FROM messages WHERE id_sender = {id_sender} AND id_receptient = {id_receptient}")
-            res = self.__cur.fetchall()
-            if res: return res
-        except sqlite3.Error as e:
-            print("Error insert article in Database "+str(e))
-        return []

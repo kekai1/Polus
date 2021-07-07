@@ -97,16 +97,16 @@ class Quiz
         }
          var ans_fizika_math='', ans_himiya_biolog='', ans_radiotech_electr='', ans_mechanica_konstr='', ans_geograpf_geolog='';
          var ans_history_politics='', ans_pedagogica_medicina='', ans_predprinim_domovodstvo='', ans_sport_voenniy='', ans_litra_isskustvo='', ans_all;
-         ans_fizika_math+="Склонность к физике и математике: " + fizika_math + "/10. ";
-         ans_himiya_biolog+=" Склонность к химии и биологии: " + himiya_biolog + "/10. ";
-         ans_radiotech_electr+=" Склонность к радиотехнике и электронике: " + radiotech_electr + "/10. ";
-         ans_mechanica_konstr+=" Склонность к механике и конструированию: " + mechanica_konstr + "/10. ";
-         ans_geograpf_geolog+=" Склонность к географии и геологии: " + geograpf_geolog + "/10. ";
-         ans_history_politics+=" Склонность к истории и политике: " + history_politics + "/10. ";
-         ans_pedagogica_medicina+=" Склонность к педагогике и медицине: " + pedagogica_medicina + "/10. ";
-         ans_predprinim_domovodstvo+=" Склонность к предпринимательству и домоводству: " + predprinim_domovodstvo + "/10. ";
-         ans_sport_voenniy+=" Склонность к спорту и военному делу: " + sport_voenniy + "/10. ";
-         ans_litra_isskustvo+=" Склонность к литературе и искусству: " + litra_isskustvo + "/10. ";
+         ans_fizika_math+="    Склонность к физике и математике: " + fizika_math + "/10";
+         ans_himiya_biolog+="\n    Склонность к химии и биологии: " + himiya_biolog + "/10";
+         ans_radiotech_electr+="\n    Склонность к радиотехнике и электронике: " + radiotech_electr + "/10";
+         ans_mechanica_konstr+="\n    Склонность к механике и конструированию: " + mechanica_konstr + "/10";
+         ans_geograpf_geolog+="\n    Склонность к географии и геологии: " + geograpf_geolog + "/10";
+         ans_history_politics+="\n    Склонность к истории и политике: " + history_politics + "/10";
+         ans_pedagogica_medicina+="\n    Склонность к педагогике и медицине: " + pedagogica_medicina + "/10";
+         ans_predprinim_domovodstvo+="\n    Склонность к предпринимательству и домоводству: " + predprinim_domovodstvo + "/10";
+         ans_sport_voenniy+="\n    Склонность к спорту и военному делу: " + sport_voenniy + "/10";
+         ans_litra_isskustvo+="\n    Склонность к литературе и искусству: " + litra_isskustvo + "/10";
 
 
 
