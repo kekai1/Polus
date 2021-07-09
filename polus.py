@@ -4,12 +4,15 @@ from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
-from forms import LoginForm, RegisterForm, MessageForm
+from forms import LoginForm, RegisterForm
 from flaskext.mysql import MySQL
 from admin.admin import admin
 from flask_moment import Moment
 
-
+from threading import Thread
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer
+from datetime import datetime
 #pygount --format=summary  для того чтобы вывести количество строк в проекте
 SECRET_KEY = os.urandom(32)
 MAX_CONTENT_LENGTH = 1024 * 1024
@@ -24,8 +27,15 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
 app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['PERMANENT_SESSION_LIFETIME']=600
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'ruslansakharbekov@gmail.com'  # введите свой адрес электронной почты здесь
+app.config['MAIL_DEFAULT_SENDER'] = 'ruslansakharbekov@gmail.com'  # и здесь
+app.config['MAIL_PASSWORD'] = 'asdqweasdqwe1'  # введите пароль
+mail = Mail(app)
+
 mysql.init_app(app)
 moment = Moment(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
@@ -93,23 +103,38 @@ def index():
 
 
 #АВТОРИЗАЦИЯ, РЕГИСТРАЦИЯ И РАБОТА С ПРОФИЛЕМ-----------------------------------------------------
-@app.route('/login', methods = ["GET", "POST"])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('profile'))
+def send_async_email(msg):
+    with app.app_context():
+        mail.send(msg)
 
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = dbase.getUserByEmail(form.email.data)
-        if user and check_password_hash(user[3], form.psw.data):
-            userlogin = UserLogin().create(user)
-            rm = form.remember.data
-            login_user(userlogin, remember=rm)
-            session.permanent = True
-            return redirect(request.args.get("next") or url_for('profile'))
-        flash('Неверные логин или пароль', 'error')
-    return render_template("user/login.html", form = form,  title=1)
+def send_email(subject, recipients, html_body):
+    msg = Message(subject, recipients=recipients)
+    msg.html = html_body
+    thr = Thread(target=send_async_email, args=[msg])
+    thr.start()
 
+def send_confirmation_email(user_email):
+    confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    confirm_url = url_for('confirm_email', token=confirm_serializer.dumps(user_email, salt='email-confirmation-salt'), _external=True)
+    html = render_template('user/email_confirmation.html', confirm_url=confirm_url)
+    send_email('Подтвердите Ваш электронный адрес ', [user_email], html)
+
+
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        email = confirm_serializer.loads(token, salt='email-confirmation-salt', max_age=3600)
+    except:
+        flash('Ссылка для подтверждения недействительна или срок ее действия истек. Выполните выход в аккаунт для повторного получения ссылки', category='error')
+        return redirect(url_for('login'))
+    user = dbase.getUserByEmail(email)
+    if user[6]:
+        flash('Аккаунт уже подтвержден', 'success')
+    else:
+        set_user = dbase.email_confirmedUser(user[0], True)
+        flash('Ваша учетная запись успешно подтвержденна', 'success')
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods = ["GET", "POST"])
@@ -125,11 +150,34 @@ def register():
             hash = generate_password_hash(request.form['psw'])
             res = dbase.addUser(form.name.data, form.email.data, hash)
             if res:
-                flash('Вы успешно зарегистрированны', category='success')
+                send_confirmation_email(form.email.data)
+                flash('Вы успешно зарегистрированны, чтобы активировать аккаунт, на вашу почту было выслано письмо с активацией', category='success')
                 return redirect(url_for('login'))
             else:
                 flash('Ошибка при добавлении', category='error')
     return render_template("user/register.html", form=form, title=1)
+
+
+@app.route('/login', methods = ["GET", "POST"])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('profile'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = dbase.getUserByEmail(form.email.data)
+        if user and check_password_hash(user[3], form.psw.data):
+            if user[6] == 0:
+                flash('Аккаунт не активирован, на почту указанную при регистрации было отправлено письмо с активацией', category='info')
+                send_confirmation_email(form.email.data)
+                return render_template("user/login.html", form=form, title=1)
+            userlogin = UserLogin().create(user)
+            rm = form.remember.data
+            login_user(userlogin, remember=rm)
+            session.permanent = True
+            return redirect(request.args.get("next") or url_for('profile'))
+        flash('Неверные логин или пароль', 'error')
+    return render_template("user/login.html", form = form,  title=1)
 
 
 @app.route('/logout')

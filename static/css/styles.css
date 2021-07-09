@@ -9,6 +9,10 @@
     border: 1px solid #FF4343;
     background: #FF9C9C;
 }
+.flash.info {
+    border: 1px solid #40e0d0;
+    background: #b0e0e6;
+}
 
 .roundcorner {
     position: relative; /* Относительное позиционирование */

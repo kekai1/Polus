@@ -84,6 +84,17 @@ class FDataBase:
         return True
 
 
+    def email_confirmedUser(self, id_user, email_confirmed):
+        try:
+            self.__cur.execute("UPDATE users SET email_confirmed = %s WHERE id_user = %s", (email_confirmed, id_user))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print('Ошибка обновления автара в БД: ', + str(e))
+            return False
+        return True
+
+
+
     ###РАБОТА С ТЕСТАМИ---------------------------------------------------------------------------------
 
     def getID_test(self, name_test):
