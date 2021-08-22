@@ -1,11 +1,11 @@
-function sortList(ol){
-    var new_ol = ol.cloneNode(false);
+function sortList(div){
+    var new_div = div.cloneNode(false);
 
     // Add all lis to an array
     var lis = [];
-    for(var i = ol.childNodes.length; i--;){
-        if(ol.childNodes[i].nodeName === 'UL')
-            lis.push(ol.childNodes[i]);
+    for(var i = div.childNodes.length; i--;){
+        if(div.childNodes[i].nodeName === 'LI')
+            lis.push(div.childNodes[i]);
     }
 
     // Sort the lis in descending order
@@ -16,8 +16,8 @@ function sortList(ol){
 
     // Add them into the ul in order
     for(var i = 0; i < lis.length; i++)
-        new_ol.appendChild(lis[i]);
-    ol.parentNode.replaceChild(new_ol, ol);
+        new_div.appendChild(lis[i]);
+    div.parentNode.replaceChild(new_div, div);
 
 
 

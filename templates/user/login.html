@@ -1,4 +1,4 @@
-{% extends 'base_not_user.html' %}
+{% extends 'base/base.html' %}
 {% block index %}
 <html>
     <head>
@@ -17,11 +17,12 @@
             }
             .form-horizontal .heading{
             display: block;
-            font-size: 35px;
+            font-size: 150%;
             font-weight: 700;
             padding: 35px 0;
             border-bottom: 1px solid #f0f0f0;
             margin-bottom: 30px;
+            word-wrap: break-word;
             }
             .form-horizontal .form-group{
             padding: 0 40px;
@@ -218,7 +219,7 @@
                         </div>
                         <hr>
                         <p>Первый раз? <a class="a1" href="{{url_for('register')}}">Регистрация</a>
-                        <p><a class="a1" href="/">Вернуться на главную</a></p>
+                        <p>Забыли пароль? <a class="a1" href="reset_password">Сброс пароля</a>
                     </form>
                 </div>
             </div><!-- /.row -->

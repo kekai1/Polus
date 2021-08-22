@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% block content %}
-<div class="wrapper">
+<div class="wrapper blockall">
 	<main class="main">
 		<div class="quiz__head">
 				<form name="quiz" action="{{url_for('aizek_temperament')}}" method="post">
@@ -12,7 +12,7 @@
 				</form>
 		</div>
 
-		<div class="quiz__body">
+		<div class="quiz__body" style="word-wrap: break-word;">
 			<div class="buttons">
 				<div class="buttons__content" id="buttons">
 					<button class="button">Default button</button><br>

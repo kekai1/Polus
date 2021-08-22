@@ -5,17 +5,7 @@
   <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
   <style>
  BODY {
-      background: url(static/images_html/index_image/background.jpg) no-repeat;
-      /* Фоновое изображение всегда отцентрировано по вертикали и горизонтали */
-      background-position: center center;
-      /* Фоновое изображение не повторяется */
-      background-repeat: no-repeat;
-      /* Фоновое изображение зафиксировано в окне просмотра, поэтому оно не смещается, когда высота контента больше высоты изображения */
-      background-attachment: fixed;
-      /* Вот что позволяет фоновому изображению подстраиваться под размер контейнера */
-      background-size: cover;
-      /* Устанавливает фоновый цвет, который будет отображаться, пока загружается фоновое изображение */
-      background-color: #464646;
+     background-color: #e3f2fd;
    }
 
 * {
@@ -28,9 +18,11 @@
   max-width: 650px;
   width: 100%;
   margin: 30px auto;
+  min-height: 40%;
   transform: scale(0.8);
 }
 .landing-page {
+  min-height: 40%;
   max-width: 960px;
   height: 475px;
   margin: 0;
@@ -80,7 +72,7 @@ p {
   <div class="landing-page">
     <h1> 500 Ошибка.</h1>
     <p>Случилась непредвиденная ошибка<br>Приносим извинения за неудобства!</p>
-    <p class="btn1 btn-default">Вернуться на <a style="color: #000000; font-weight:bold" href="{{url_for('index')}}">Главную</a></p>
+    <p class="btn1 btn-default">Вернуться на страницу<a style="color: #000000; font-size: 100% font-weight:bold" href="{{url_for('login')}}"> Авторизации</a></p>
   </div>
 </div>
 

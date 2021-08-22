@@ -5,17 +5,7 @@
   <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
   <style>
  BODY {
-      background: url(static/images_html/index_image/background.jpg) no-repeat;
-      /* Фоновое изображение всегда отцентрировано по вертикали и горизонтали */
-      background-position: center center;
-      /* Фоновое изображение не повторяется */
-      background-repeat: no-repeat;
-      /* Фоновое изображение зафиксировано в окне просмотра, поэтому оно не смещается, когда высота контента больше высоты изображения */
-      background-attachment: fixed;
-      /* Вот что позволяет фоновому изображению подстраиваться под размер контейнера */
-      background-size: cover;
-      /* Устанавливает фоновый цвет, который будет отображаться, пока загружается фоновое изображение */
-      background-color: #464646;
+     background-color: #e3f2fd;
    }
 
 * {
@@ -88,7 +78,7 @@ button {
   <div class="landing-page">
     <h1> 404 Ошибка.</h1>
     <p> Страница которую вы ищете не существует</p>
-    <p class="btn1 btn-default">Вернуться на <a style="color: #000000; font-weight:bold" href="{{url_for('index')}}">Главную</a></p>
+    <p class="btn1 btn-default">Вернуться на страницу<a style="color: #000000; font-weight:bold" href="{{url_for('login')}}"> Авторизации</a></p>
   </div>
 </div>
 

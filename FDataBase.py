@@ -1,8 +1,4 @@
-import math
 import sqlite3
-import time
-import re
-from flask import url_for, make_response
 
 class FDataBase:
     def __init__(self, db):
@@ -87,6 +83,16 @@ class FDataBase:
     def email_confirmedUser(self, id_user, email_confirmed):
         try:
             self.__cur.execute("UPDATE users SET email_confirmed = %s WHERE id_user = %s", (email_confirmed, id_user))
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print('Ошибка обновления автара в БД: ', + str(e))
+            return False
+        return True
+
+
+    def password_edit(self, email, password):
+        try:
+            self.__cur.execute("UPDATE users SET psw_user = %s WHERE email_user = %s", (password, email))
             self.__db.commit()
         except sqlite3.Error as e:
             print('Ошибка обновления автара в БД: ', + str(e))

@@ -1,47 +1,54 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, make_response, session, send_from_directory
+from flask import Flask, render_template, url_for, request, flash, redirect, make_response, send_from_directory, session
 import os
 from FDataBase import FDataBase
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, RessetForm, Edit_Password
 from flaskext.mysql import MySQL
 from admin.admin import admin
 from flask_moment import Moment
-
+import random
 from threading import Thread
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
-from datetime import datetime
-#pygount --format=summary  для того чтобы вывести количество строк в проекте
-SECRET_KEY = os.urandom(32)
+
+
+
+
 MAX_CONTENT_LENGTH = 1024 * 1024
+
+
 
 
 #Конфигурационные настройки проекта, и связь с БД-----------------------------------------------
 app = Flask(__name__)
-app.debug = True
+app.debug = False
+
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'bafce1efb1c421'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
 app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
 app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SECRET_KEY'] = '123x1cY/x07<y/x03\/8a1du)xb0xbcdg!xe1'
 
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'ruslansakharbekov@gmail.com'  # введите свой адрес электронной почты здесь
-app.config['MAIL_DEFAULT_SENDER'] = 'ruslansakharbekov@gmail.com'  # и здесь
-app.config['MAIL_PASSWORD'] = 'asdqweasdqwe1'  # введите пароль
-mail = Mail(app)
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'ruslansakharbekov@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'ruslansakharbekov@gmail.com'
+app.config['MAIL_PASSWORD'] = 'asdqweasdqwe1'
 
-mysql.init_app(app)
+mail = Mail(app)
 moment = Moment(app)
+#app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
+#app.config['SESSION_COOKIE_SECURE'] = "True"
+mysql.init_app(app)
 #Конфигурационные настройки проекта, и связь с БД КОНЕЦ-----------------------------------------------
 
-app.register_blueprint(admin, url_prefix='/admin')
 
+
+app.register_blueprint(admin, url_prefix='/admin')
 
 #Проверка входа пользователя в сессии перед url запросом-----------------------------------------------
 login_manager = LoginManager(app)
@@ -59,15 +66,14 @@ def load_user(user_id):
     return UserLogin().fromDB(user_id, dbase)
 
 
-
 #Устанавливаем содеинение с БД для всей текущей сессии
-dbase = None
 @app.before_request
 def before_request():
     """Устанавливаем соединение с БД перед выполнением запроса"""
-    global dbase
+    global dbase, db
     db = mysql.connect()
     dbase = FDataBase(db)
+
 
 
 @app.route('/favicon.ico')
@@ -76,30 +82,16 @@ def favicon():
 
 
 ####Работа с куки------------------------------------------------------------
-@app.route('/delete-cookie/')
-def delete_cookie():
-    res = make_response("Cookie Removed")
-    res.set_cookie('kazah', 'flask', secure=True, httponly=True, samesite='Lax')
-    return res
-
-
 @app.route('/cookie/')
 def cookie():
-    if not request.cookies.get('username'):
-        res = make_response("Setting a cookie")
-        res.set_cookie('kazah', 'flask', secure=True, httponly=True, samesite='Lax')
-    else:
-        res = make_response("Value of cookie foo is {}".format(request.cookies.get('kazah')))
-    return res
+    r = make_response("Setting a cookie")
+    r.set_cookie("cookie1", "cookie_value", secure=True)
+    r.set_cookie("cookie2", "cookie_value", httponly=True)
+    r.set_cookie("cookie3", "cookie_value", samesite='Lax')
+    r.set_cookie("cookie4", "cookie_value", secure=True, httponly=True)
+    r.set_cookie("cookie5", "cookie_value", httponly=True, samesite='Lax')
+    return r
 ####КОНЕЦ работы с куки------------------------------------------------------------
-
-
-@app.route('/')
-def index():
-    authenticated = False
-    if current_user.is_authenticated:
-        authenticated = True
-    return render_template("index.html", authenticated = authenticated)
 
 
 #АВТОРИЗАЦИЯ, РЕГИСТРАЦИЯ И РАБОТА С ПРОФИЛЕМ-----------------------------------------------------
@@ -154,15 +146,40 @@ def register():
                 flash('Вы успешно зарегистрированны, чтобы активировать аккаунт, на вашу почту было выслано письмо с активацией', category='success')
                 return redirect(url_for('login'))
             else:
-                flash('Ошибка при добавлении', category='error')
+                flash('Пользователь с таким email уже существует', category='error')
     return render_template("user/register.html", form=form, title=1)
 
+###Страницы помощи--------------------------------------------
+#@app.route('/company')
+#def company():
+#    authenticated = False
+#    if current_user.is_authenticated:
+#        authenticated = True
+#    return render_template('base/company.html', authenticated=authenticated)
 
+
+@app.route('/help_technics')
+def help_technics():
+    authenticated = False
+    if current_user.is_authenticated:
+        authenticated = True
+    return render_template('base/help_technics.html', authenticated=authenticated)
+
+
+@app.route('/politics_personalinf')
+def politics_personalinf():
+    authenticated = False
+    if current_user.is_authenticated:
+        authenticated = True
+    return render_template('base/politics_personalinf.html', authenticated=authenticated)
+###Страницы помощи Конец--------------------------------------------
+
+
+@app.route('/', methods = ["GET", "POST"])
 @app.route('/login', methods = ["GET", "POST"])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('profile'))
-
     form = LoginForm()
     if form.validate_on_submit():
         user = dbase.getUserByEmail(form.email.data)
@@ -173,16 +190,43 @@ def login():
                 return render_template("user/login.html", form=form, title=1)
             userlogin = UserLogin().create(user)
             rm = form.remember.data
-            login_user(userlogin, remember=rm)
-            session.permanent = True
+            login_user(userlogin, remember = rm)
+            session['loggedin'] = True
+            session['username'] = current_user.getName()
+
             return redirect(request.args.get("next") or url_for('profile'))
         flash('Неверные логин или пароль', 'error')
     return render_template("user/login.html", form = form,  title=1)
 
 
+
+
+
+@app.route('/reset_password', methods = ["GET", "POST"])
+def reset_password():
+    form = RessetForm()
+    if form.validate_on_submit():
+
+        chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        password =  ''
+        for i in range(8):
+            password += random.choice(chars)
+        hash_password = generate_password_hash(password)
+        res = dbase.password_edit(form.email.data, hash_password)
+
+        html = render_template('user/reset_password_email.html', password=password)
+        send_email('Подтвердите Ваш электронный адрес ', [form.email.data], html)
+        flash('Письмо отправлено!', 'info')
+        return redirect(url_for('login'))
+    return render_template("user/reset_password.html", form = form,  title=1)
+
+
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
+    session.pop('loggedin', None)
+    session.pop('username', None)
     flash('Вы вышли из профиля', 'success')
     return redirect(url_for('login'))
 
@@ -195,7 +239,6 @@ def profile():
         authenticated = True
     id_user = current_user.get_id()
     return render_template("user/profile.html", authenticated = authenticated, result_test = dbase.getresults_test(id_user))
-
 
 
 @app.route('/userava')
@@ -255,6 +298,44 @@ def update_profile():
     if current_user.is_authenticated:
         authenticated = True
         return render_template("user/update_profile.html", authenticated = authenticated)
+
+
+@app.route('/password_edit')
+@login_required
+def password_edit():
+    authenticated = False
+    if current_user.is_authenticated:
+        authenticated = True
+    form = Edit_Password()
+    return render_template("user/password_edit.html", form=form, authenticated = authenticated)
+
+
+
+@app.route('/psw_edit', methods = ["GET", "POST"])
+def psw_edit():
+    if request.method == 'POST':
+        form = Edit_Password()
+        if form.psw.data != form.psw2.data:
+            flash('Новые пароли не совпадают', category='error')
+            return redirect(url_for('password_edit'))
+        if check_password_hash(current_user.get_psw(), request.form['old_psw']):
+            if form.validate_on_submit():
+                if check_password_hash(current_user.get_psw(), request.form['old_psw']):
+                    hash = generate_password_hash(form.psw.data)
+                    if form.psw.data == request.form['old_psw']:
+                        flash('Новый пароль не может быть таким же, как старый', category='error')
+                        return redirect(url_for('password_edit'))
+                    res = dbase.password_edit(current_user.getEmail(), hash)
+                    if res:
+                        flash('Пароль успешно изменен', category='success')
+                        return redirect(url_for('password_edit'))
+                    else:
+                        flash('Ошибка при изменении', category='error')
+        else:
+            flash('Вы ввели неверный старый пароль', category='error')
+            return redirect(url_for('password_edit'))
+    return redirect(url_for('password_edit'))
+
 #АВТОРИЗАЦИЯ, РЕГИСТРАЦИЯ И РАБОТА С ПРОФИЛЕМ    КОНЕЦ-----------------------------------------------------
 
 
@@ -442,7 +523,7 @@ def kettel():
         return render_template("tests/kettel.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/kettel.html", tests=dbase.getTests(), authenticated=authenticated)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 
@@ -480,7 +561,7 @@ def type_thinking():
         return render_template("tests/type_thinking.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/type_thinking.html", tests=dbase.getTests(), authenticated=authenticated)
+        return render_template("tests/tests.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 @app.route('/method_profile', methods = ["GET", "POST"])
@@ -498,7 +579,7 @@ def method_profile():
         return render_template("tests/method_profile.html", tests=dbase.getTests(), authenticated=authenticated)
     else:
         flash('Вы уже проходили данный тест, пожалуйста, попробуйте выбрать другой.', category='error')
-        return render_template("tests/method_profile.html", tests=dbase.getTests(), authenticated=authenticated)
+        return render_template("tests/test.html", tests=dbase.getTests(), authenticated=authenticated)
 
 
 

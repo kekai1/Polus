@@ -1,3 +1,9 @@
+body
+{
+    background-color: #74EBD5;
+    background-image: linear-gradient(270deg, #74EBD5 0%, #9FACE6 100%); min-height: 100vh;
+}
+
 .flash {
     padding: 10px;
 }
@@ -19,14 +25,31 @@
     margin-right: 20px; /* Отступ справа */
 }
 
+.icon {
+margin: 0 0 0 25px;
+}
+
+#map_147274667 {
+ height: 10.7em;
+ border-radius: 10px;
+ border-style: solid;
+ width: 50%;
+}
+
+.wrap {
+    width: 100%;
+    height: 50%;
+}
+
 .floatleft {
-    float:left;
+    float: left;
     width: 35%;
 
 }
 
 .floatright {
-float: right;
+    text-align: left;
+    float: right;
     width: 65%;
 }
 
@@ -35,7 +58,29 @@ float: right;
   display: none;
 }
 
+.block {
+    background-color: #ffffff;
+    min-height: 500px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
 
 
+pre {
+     color:black;
+     white-space: pre-wrap;
+     white-space: -moz-pre-wrap;
+     white-space: -pre-wrap;
+     white-space: -o-pre-wrap;
+     word-wrap: break-word;
+     font-family: sans-serif;
+}
 
 
+.active {
+    color: black;
+    font-weight: 600;
+    font-size: 2em;
+    }
