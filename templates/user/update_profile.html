@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container-fluid d-flex h-100 flex-column">
+  <div class="row h-75" style="padding: 3px 0 0 5px;">
+    	<table border="0" class="profile-table">
+			<tr><td valign="top">
+				<div class="">
+					<img src="{{ url_for('userava') }}" width="100" height="100">
+				</div>
+				<p></p>
+				<div class="profile-load">
+					<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+						<p><input type="file" name="file" id="file-input">
+						<p></p>
+						<p></p>
+						<p style="color:#000000"><input type="submit" value="Обновить профиль">
+						{% for cat, msg in get_flashed_messages(True) %}
+						<div class="flash {{cat}}">{{msg}}</div>
+						{% endfor %}
+						<div valign="top">
+							<p style="color:#000000"><label>Имя:</label>
+							 <input type="text" name="update_name" value=""
+							 placeholder="{{ current_user.getName() }}" minlength="5"/></p>
+							<p style="color:#000000">Email: {{ current_user.getEmail() }}</p>
+							<p><p>
+							</p></p>
+						</div>
+					</form>
+				</div>
+			</td>
+			</tr>
+		</table>
+  </div>
+  <div class="row h-25" style="padding: 3px 3px 0 5px;">
+		  <button id="button" type="button" onClick="get_avatar()" class="btn btn-outline-primary" style="padding: 10px 24px;">Выбрать автар из стандартных</button>
+  </div>
+</div>
+<div id="div1" style="display:none;">
+	Инструкция: скачайте выбранный аватар, и вставьте его в "Обзор..."<br>
+	<img style="border-radius: 100px;" src="/static/images_avatar/avatar.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-1.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-2.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-3.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-4.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-5.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-6.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-7.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-8.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-9.png"  width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-10.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-11.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-12.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-13.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-14.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-15.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-16.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-17.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-18.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-19.png" width="120" height="120">
+	<img style="border-radius: 100px;"  src="/static/images_avatar/avatar-20.png" width="120" height="120">
+</div><br>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#button").click(function(){
+    $("#div1").fadeToggle("slow");
+  });
+});
+</script>
+
+<p style="color:#000000">Дата регистрации: {{ moment(current_user.getDate()).format('lll') }}</p>
+{% endblock %}

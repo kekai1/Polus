@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+
+<div class="container-fluid d-flex h-100 flex-column">
+  <div class="row h-75">
+    	<p></p>
+       {% if result_test %}
+        <p></p><button style="right: 0; margin: 1% 2%; " id="button_avatar" type="button" onClick="sortList(document.getElementsByClassName('list-posts')[0]);" class="btn btn-secondary btn-xs">Сначала старые</button>
+        {% endif %}
+  </div>
+  <div class="list-posts" style="margin: 1% 0 0 0;">
+      {% if result_test %}
+                    {% for p in result_test %}
+                     <li class="btn btn-light" style="width: 99%;">
+                        <h5 style="background: #00b4ef;" class="alert btn-primary">{{ p[1] }}</h5>
+                        <p>{{ moment(p[5]).format('lll') }}</p>
+                        <p style="font-size: 4em"><pre>{{ p[4] }}</pre></p>
+                    </li>
+                    <p></p>
+                    <p></p>
+                    {% endfor %}
+      {% else %}
+      <h4>Пройти тестирование <a href="/tests">тут</a></h4>
+      {% endif %}
+  </div>
+</div>
+<script src="static/js/sort_lists.js"></script>
+{% endblock %}

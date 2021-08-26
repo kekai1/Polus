@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+  <style>
+ BODY {
+     background-color: #e3f2fd;
+   }
+
+* {
+  font-family: sans-serif;
+  color: rgba(0,0,0,0.75);
+}
+
+
+.wrapper {
+  max-width: 650px;
+  width: 100%;
+  margin: 30px auto;
+  min-height: 40%;
+  transform: scale(0.8);
+}
+.landing-page {
+  min-height: 40%;
+  max-width: 960px;
+  height: 475px;
+  margin: 0;
+  box-shadow: 0px 0px 8px 1px #ccc;
+  background: #fafafa;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+svg {
+  width: 50%;
+  max-height: 225px;
+  height: auto;
+  margin: 0 0 15px;
+}
+h1 {
+  font-size: 48px;
+  margin: 0;
+}
+p {
+
+  width: 35%;
+  font-size: 20px;
+  margin: 16px auto 24px;
+  text-align: center;
+}
+
+
+.btn1{
+    float: right;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    transition: all 0.5s ease 0s;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="wrapper">
+  <div class="landing-page">
+    <h1> 500 Ошибка.</h1>
+    <p>Случилась непредвиденная ошибка<br>Приносим извинения за неудобства!</p>
+    <p class="btn1 btn-default">Вернуться на страницу<a style="color: #000000; font-size: 100% font-weight:bold" href="{{url_for('login')}}"> Авторизации</a></p>
+  </div>
+</div>
+
+  </body>
+</html>
+

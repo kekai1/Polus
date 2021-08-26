@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <span style='font-size:12.0pt;margin-left: 65%'>
+    <script type="text/javascript">
+    // Заголовок страницы (h1)
+    var title = "";
+    // Подзаголовок (h2)
+    var subtitle = "       Для того, чтобы полет ракеты состоялся,  необходимо изначально определить бюджет всего проекта, а также рассчитать разнообразные экономические показатели.        Тебе необходимо решить экономическую задачу и внести ответ.";
+    // Это ваши вопросы
+   var questions=[
+{
+	text: "По бизнес-плану построения ракеты предполагается вложить в четырёхлетний проект целое число млн рублей. По итогам каждого года планируется прирост средств вкладчика «Научно-производственный центра «Полюс» на 30% по сравнению с началом года. Начисленные проценты остаются вложенными в проект. Кроме этого, сразу после начислений процентов нужны дополнительные вложения: по 20 млрд рублей в первый и второй годы, а также по 15 млрд в третий и четвёртый годы. Найдите наименьший размер первоначальных вложений, при котором общая сумма средств вкладчика к началу третьего года станет больше 190 млрд, а к концу проекта — больше 360 млрд рублей.",
+	answers: ["131 млн. рублей", "110 млн. рублей", "87 млн. рублей", "93 млн. рублей", "98 млн. рублей"],
+	correctAnswer: 0,
+	correctAnswer1: 1,
+	correctAnswer2: 2,
+	correctAnswer3: 3,
+	correctAnswer4: 4
+}
+];
+
+    var yourAns = new Array;
+    var score = 0;
+
+    function Engine(question, answer) {yourAns[question]=answer;}
+
+    function Score(){
+       var answerText = "Результаты:\n";
+       for(var i = 0; i < yourAns.length; ++i){
+        var num = i+1;
+        if(yourAns[i]==questions[i].correctAnswer2)
+        {
+            score+=10;
+        }
+           }
+
+
+
+        if(score>0)
+        {
+           answerText="Достижение: Грамота знаний по экономике";
+           document.getElementById('score').value = answerText;
+         }
+        if(score<=0)
+        {
+            answerText="\nВы не правильно ответили.";
+        }
+
+
+
+
+       alert(answerText);
+       yourAns = [];
+       score = 0;
+       clearForm("quiz");
+    }
+    function clearForm(name) {
+       var f = document.forms[name];
+       for(var i = 0; i < f.elements.length; ++i) {
+        if(f.elements[i].checked)
+            f.elements[i].checked = false;
+    }
+    }
+    </script>
+
+    <style>
+    span.quest {font-weight: bold;}
+    </style>
+
+    <h1><script>document.write(title)</script></h1>
+    <h2><script>document.write(subtitle)</script></h2>
+
+
+
+
+    <form name="quiz" action="{{url_for('ekonomist')}}" method="post">
+        <ol>
+        <script>
+        for(var q=0; q<questions.length; ++q) {
+           var question = questions[q];
+           var idx = 1 + q;
+
+           document.writeln('<li><span class="quest">' + question.text + '</span><br/>');
+           for(var i in question.answers) {
+            document.writeln('<input type=radio name="q' + idx + '" value="' + i +
+            '" onClick="Engine(' + q + ', this.value)">' + question.answers[i] + '<br/>');
+        }
+        }
+        </script>
+        </ol>
+         <p><input type="hidden" name="user_id" value="{{ current_user.get_id() }}" required />
+         <p><input type="hidden" name="name_test" value="Офис экономики" required />
+         <input type="hidden" data-index="1" name="result" id="score" />
+        <input type="Submit" onClick="Score()" value="Проверить результаты" />
+    </form>
+
+{% endblock %}

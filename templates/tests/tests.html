@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+            <p></p>
+            <ul class = roundcorner>
+                {% if not test_finish %}
+                <table style="table-layout: fixed; height: 3em;">
+                    <tr style="">
+                    <td class="alert-warning" style="text-align: left; width: 95%; padding: 0 0 0 1em;"> Любой тест можно пройти
+                    только один раз. Без повторного прохождения! Пожалуйста отвечайте на вопросы внимательно.</td>
+                    <td class="alert-warning" style="text-align: center; width: 5%;"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    </svg></td>
+                    </tr>
+                </table>
+                {% endif %}
+
+                {% for cat, msg in get_flashed_messages(True) %}
+                <div class="flash {{cat}}">{{msg}}</div>
+                {% endfor %}
+                <p></p>
+
+                {% for p in test_not_finish %}
+                <a href="{{ p[3] }}" class="btn btn-light" style="width: 100%; display:block;">
+                        <p class="btn btn-link">{{ p[1] }}</p>
+                        <p>{{ p[2] | striptags }}</p>
+                </a>
+                <p></p>
+                {% endfor %}
+                {% for p in test_finish %}
+                <li class="btn btn-light disabled" style="width: 100%; color: #808080;">
+                    <p><a href="{{ p[3] }}" style="pointer-events: none; color: #808080;">{{ p[1] }}</a></p>
+                    <p>{{ p[2] | striptags }}</p>
+                </li>
+                <p></p>
+                {% endfor %}
+            </ul>
+            <p></p>
+<script>const typeAnimate = 'fade';</script>
+<script>
+$(document).ready(function(){
+  $("svg").click(function(){
+    $("table").hide();
+  });
+});
+</script>
+{% endblock %}

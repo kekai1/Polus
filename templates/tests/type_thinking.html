@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="wrapper blockall">
+	<main class="main">
+		<div class="quiz__head">
+				<form name="quiz" action="{{url_for('type_thinking')}}" method="post">
+					<p><input type="hidden" name="name_test" value="Методика «Тип мышления» (методика в модификации Г. Резапкиной)" required />
+					<p><input type="hidden" name="id_user" value="{{ current_user.get_id() }}" required />
+					<input type="hidden" data-index="1" name="result" id="result" />
+					<div class="head__content" id="head"></div>
+					<input type="hidden" id="submit" class="btn btn-success" onClick="Check_result()" type="Submit" value="Завершить тестирование" />
+				</form>
+		</div>
+
+		<div class="quiz__body">
+			<div class="buttons">
+				<div class="buttons__content" id="buttons">
+					<button class="button">Default button</button><br>
+					<button class="button button_wrong">Wrong answer</button><br>
+					<button class="button button_correct">Correct answer</button><br>
+					<button class="button button_passive">Unclicked button</button><br>
+				</div>
+			</div>
+			<p></p>
+			<div class="quiz__footer">
+				<div class="footer__content" id="pages">0 / 0</div>
+			</div>
+		</div>
+	</main>
+</div>
+<script src="static/js/tests/type_thinking.js"></script>
+{% endblock %}

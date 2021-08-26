@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <p></p>
+    <ol class = "">
+        {% for p in users%}
+        <li>
+            <p align-text="left" class="btn btn-outline-danger"><img src="{{ url_for('getava', id_user = p[1])}}"
+           width="30" height="30"> {{ p[0] }}: Рейтинг {{ p[2] }}</p>
+        </li>
+        {% endfor %}
+    </ol>
+    <p></p>
+{% endblock %}
