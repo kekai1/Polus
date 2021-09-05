@@ -143,7 +143,7 @@ def register():
             res = dbase.addUser(form.name.data, form.email.data, hash)
             if res:
                 send_confirmation_email(form.email.data)
-                flash('Вы успешно зарегистрированны, чтобы активировать аккаунт, на вашу почту было выслано письмо с активацией', category='success')
+                flash('Вы успешно зарегистрированны, чтобы активировать аккаунт, на вашу почту было выслано письмо с активацией. Оно может находится в спаме.', category='success')
                 return redirect(url_for('login'))
             else:
                 flash('Пользователь с таким email уже существует', category='error')

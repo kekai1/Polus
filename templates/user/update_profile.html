@@ -19,7 +19,7 @@
 						<div class="flash {{cat}}">{{msg}}</div>
 						{% endfor %}
 						<div valign="top">
-							<p style="color:#000000"><label>Имя:</label>
+							<p style="color:#000000"><label>ФИО:</label>
 							 <input type="text" name="update_name" value=""
 							 placeholder="{{ current_user.getName() }}" minlength="5"/></p>
 							<p style="color:#000000">Email: {{ current_user.getEmail() }}</p>
@@ -33,7 +33,7 @@
 		</table>
   </div>
   <div class="row h-25" style="padding: 3px 3px 0 5px;">
-		  <button id="button" type="button" onClick="get_avatar()" class="btn btn-outline-primary" style="padding: 10px 24px;">Выбрать автар из стандартных</button>
+		  <button id="button" type="button" onClick="get_avatar()" class="btn btn-outline-primary" style="padding: 10px 24px;">Выбрать аватар из стандартных</button>
   </div>
 </div>
 <div id="div1" style="display:none;">
@@ -71,5 +71,5 @@ $(document).ready(function(){
 });
 </script>
 
-<p style="color:#000000">Дата регистрации: {{ moment(current_user.getDate()).format('lll') }}</p>
+<p style="color:#000000"> Дата регистрации: {{ moment(current_user.getDate()).format('lll') }}</p>
 {% endblock %}
