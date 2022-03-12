@@ -26,18 +26,18 @@ app = Flask(__name__)
 app.debug = False
 
 mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'bafce1efb1c421'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'b9e81c99'
-app.config['MYSQL_DATABASE_DB'] = 'heroku_6237bfc1dff5be7'
-app.config['MYSQL_DATABASE_HOST'] = 'eu-cdbr-west-01.cleardb.com'
-app.config['SECRET_KEY'] = '123x1cY/x07<y/x03\/8a1du)xb0xbcdg!xe1'
+app.config['MYSQL_DATABASE_USER'] = '*******'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''*******''
+app.config['MYSQL_DATABASE_DB'] = '*******'
+app.config['MYSQL_DATABASE_HOST'] = '*******'
+app.config['SECRET_KEY'] = '*******'
 
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'ruslansakharbekov@gmail.com'
-app.config['MAIL_DEFAULT_SENDER'] = 'ruslansakharbekov@gmail.com'
-app.config['MAIL_PASSWORD'] = 'asdqweasdqwe1'
+app.config['MAIL_USERNAME'] = '*******'
+app.config['MAIL_DEFAULT_SENDER'] = '*******'
+app.config['MAIL_PASSWORD'] = '*******'
 
 mail = Mail(app)
 moment = Moment(app)
